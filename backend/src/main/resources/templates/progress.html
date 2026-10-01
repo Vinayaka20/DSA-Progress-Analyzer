@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress - DSA Progress Analyzer</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">◆</div>
+
+            <div>
+                <h2>DSA Progress</h2>
+                <span>Analyzer</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard" class="nav-item">
+                <span>▣</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>✦</span>
+                <span>AI Coach</span>
+            </a>
+
+            <a href="/problems-page" class="nav-item">
+                <span>☷</span>
+                <span>Problems</span>
+            </a>
+
+            <a href="/analytics" class="nav-item">
+                <span>▥</span>
+                <span>Analytics</span>
+            </a>
+
+            <a href="/progress" class="nav-item active">
+                <span>↗</span>
+                <span>Progress</span>
+            </a>
+
+            <a href="/github" class="nav-item">
+                <span>◈</span>
+                <span>GitHub</span>
+            </a>
+
+            <a href="/settings" class="nav-item">
+                <span>⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-user">
+
+            <div class="avatar">V</div>
+
+            <div>
+                <strong>Vinayaka</strong>
+                <small>DSA Student</small>
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <div class="search-box">
+                <span>⌕</span>
+
+                <input
+                        type="text"
+                        placeholder="Search..."
+                >
+            </div>
+
+            <div class="top-user">
+
+                <div class="notification">
+                    ♧
+                    <span>1</span>
+                </div>
+
+                <strong>Vinayaka</strong>
+
+                <div class="avatar small">V</div>
+
+            </div>
+
+        </header>
+
+        <!-- Progress Content -->
+        <section class="dashboard">
+
+            <div class="page-heading">
+
+                <div>
+
+                    <h1>Progress</h1>
+
+                    <p>
+                        Track your goals and learning journey.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="stats-grid">
+
+                <div class="stat-card solved">
+
+                    <div class="stat-icon">★</div>
+
+                    <div class="stat-number" id="totalSolved">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Total Solved
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">↗</div>
+
+                    <div class="stat-number" id="currentStreak">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Current Streak
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">🏆</div>
+
+                    <div class="stat-number" id="longestStreak">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Longest Streak
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Weekly Goal -->
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>Weekly Goal</h2>
+
+                    <button id="editGoalsBtn" class="export-btn">
+                        Edit Goals
+                    </button>
+
+                </div>
+
+                <h3 id="weeklyGoalText">
+                    0 / 0
+                </h3>
+
+                <div class="progress-bar">
+
+                    <div
+                            id="weeklyBar"
+                            class="progress-fill">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Monthly Goal -->
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>Monthly Goal</h2>
+
+                </div>
+
+                <h3 id="monthlyGoalText">
+                    0 / 0
+                </h3>
+
+                <div class="progress-bar">
+
+                    <div
+                            id="monthlyBar"
+                            class="progress-fill">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Target Goal -->
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>Target Goal</h2>
+
+                </div>
+
+                <h3 id="targetGoalText">
+                    0 / 0
+                </h3>
+
+                <div class="progress-bar">
+
+                    <div
+                            id="targetBar"
+                            class="progress-fill">
+                    </div>
+
+                </div>
+
+                <p id="remainingText">
+                    Remaining: 0
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="/js/progress.js?v=2"></script>
+
+</body>
+
+</html>

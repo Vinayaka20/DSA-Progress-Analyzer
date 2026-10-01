@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Problems - DSA Progress Analyzer</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">◆</div>
+
+            <div>
+                <h2>DSA Progress</h2>
+                <span>Analyzer</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard" class="nav-item">
+                <span>▣</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>✦</span>
+                <span>AI Coach</span>
+            </a>
+
+            <a href="/problems-page" class="nav-item">
+                <span>☷</span>
+                <span>Problems</span>
+            </a>
+
+            <a href="/analytics" class="nav-item">
+                <span>▥</span>
+                <span>Analytics</span>
+            </a>
+
+            <a href="/progress" class="nav-item">
+                <span>↗</span>
+                <span>Progress</span>
+            </a>
+
+            <a href="/github" class="nav-item">
+                <span>◈</span>
+                <span>GitHub</span>
+            </a>
+
+            <a href="/settings" class="nav-item">
+                <span>⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-user">
+
+            <div class="avatar">V</div>
+
+            <div>
+                <strong>Vinayaka</strong>
+                <small>DSA Student</small>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <div class="search-box">
+                <span>⌕</span>
+
+                <input
+                        type="text"
+                        id="problemSearch"
+                        placeholder="Search problems, topics..."
+                >
+            </div>
+
+            <div class="top-user">
+
+                <div class="notification">
+                    ♧
+                    <span>1</span>
+                </div>
+
+                <strong>Vinayaka</strong>
+
+                <div class="avatar small">V</div>
+
+                <span>⌄</span>
+
+            </div>
+
+        </header>
+
+
+        <!-- Problems content -->
+        <section class="dashboard">
+
+            <div class="page-heading">
+
+                <div>
+
+                    <h1>Solved Problems</h1>
+
+                    <p>
+                        Explore and analyze your solved DSA problems.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Summary -->
+            <div class="stats-grid">
+
+                <div class="stat-card solved">
+
+                    <div class="stat-icon">ⓘ</div>
+
+                    <div
+                            class="stat-number"
+                            id="problemTotal">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Total Problems
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card easy">
+
+                    <div class="stat-icon">▥</div>
+
+                    <div
+                            class="stat-number"
+                            id="problemEasy">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Easy
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card medium">
+
+                    <div class="stat-icon">🔥</div>
+
+                    <div
+                            class="stat-number"
+                            id="problemMedium">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Medium
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card hard">
+
+                    <div class="stat-icon">★</div>
+
+                    <div
+                            class="stat-number"
+                            id="problemHard">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Hard
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Filters -->
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>Filters</h2>
+
+                </div>
+
+                <div class="problem-filters">
+
+                    <select id="difficultyFilter">
+
+                        <option value="all">
+                            All Difficulties
+                        </option>
+
+                        <option value="Easy">
+                            Easy
+                        </option>
+
+                        <option value="Medium">
+                            Medium
+                        </option>
+
+                        <option value="Hard">
+                            Hard
+                        </option>
+
+                    </select>
+
+
+                    <select id="topicFilter">
+
+                        <option value="all">
+                            All Topics
+                        </option>
+
+                    </select>
+
+
+                    <button
+                            id="clearFilters"
+                            class="export-btn">
+
+                        Clear Filters
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Problems table -->
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>Problems</h2>
+
+                        <span id="problemCount">
+                            Loading...
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table class="problems-table">
+
+                        <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Problem</th>
+
+                            <th>Difficulty</th>
+
+                            <th>Topics</th>
+
+                            <th>Platform</th>
+
+                            <th>Link</th>
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody id="problemsTableBody">
+
+                        <tr>
+
+                            <td colspan="6">
+                                Loading problems...
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="/js/problems.js"></script>
+
+</body>
+
+</html>
