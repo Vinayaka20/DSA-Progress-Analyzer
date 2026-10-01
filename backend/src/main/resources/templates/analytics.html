@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analytics - DSA Progress Analyzer</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">◆</div>
+
+            <div>
+                <h2>DSA Progress</h2>
+                <span>Analyzer</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard" class="nav-item">
+                <span>▣</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>✦</span>
+                <span>AI Coach</span>
+            </a>
+
+            <a href="/problems-page" class="nav-item">
+                <span>☷</span>
+                <span>Problems</span>
+            </a>
+
+            <a href="/analytics" class="nav-item active">
+                <span>▥</span>
+                <span>Analytics</span>
+            </a>
+
+            <a href="/progress" class="nav-item">
+                <span>↗</span>
+                <span>Progress</span>
+            </a>
+
+            <a href="/github" class="nav-item">
+                <span>◈</span>
+                <span>GitHub</span>
+            </a>
+
+            <a href="/settings" class="nav-item">
+                <span>⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-user">
+
+            <div class="avatar">V</div>
+
+            <div>
+                <strong>Vinayaka</strong>
+                <small>DSA Student</small>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main -->
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="search-box">
+
+                <span>⌕</span>
+
+                <input
+                        type="text"
+                        placeholder="Search problems, topics..."
+                >
+
+            </div>
+
+            <div class="top-user">
+
+                <div class="notification">
+                    ♧
+                    <span>1</span>
+                </div>
+
+                <strong>Vinayaka</strong>
+
+                <div class="avatar small">V</div>
+
+                <span>⌄</span>
+
+            </div>
+
+        </header>
+
+
+        <!-- Analytics -->
+        <section class="dashboard">
+
+            <div class="page-heading">
+
+                <div>
+
+                    <h1>Analytics</h1>
+
+                    <p>
+                        Analyze your DSA solving performance and progress.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Summary -->
+            <div class="stats-grid">
+
+                <div class="stat-card solved">
+
+                    <div class="stat-icon">ⓘ</div>
+
+                    <div
+                            class="stat-number"
+                            id="analyticsTotal">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Total Solved
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card easy">
+
+                    <div class="stat-icon">▥</div>
+
+                    <div
+                            class="stat-number"
+                            id="analyticsEasy">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Easy
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card medium">
+
+                    <div class="stat-icon">🔥</div>
+
+                    <div
+                            class="stat-number"
+                            id="analyticsMedium">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Medium
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card hard">
+
+                    <div class="stat-icon">★</div>
+
+                    <div
+                            class="stat-number"
+                            id="analyticsHard">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Hard
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Difficulty -->
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>Difficulty Breakdown</h2>
+
+                </div>
+
+                <div class="difficulty-breakdown">
+
+                    <div class="difficulty-row">
+
+                        <span>Easy</span>
+
+                        <strong id="breakdownEasy">
+                            0
+                        </strong>
+
+                        <span id="breakdownEasyPercent">
+                0%
+            </span>
+
+                    </div>
+
+
+                    <div class="difficulty-row">
+
+                        <span>Medium</span>
+
+                        <strong id="breakdownMedium">
+                            0
+                        </strong>
+
+                        <span id="breakdownMediumPercent">
+                0%
+            </span>
+
+                    </div>
+
+
+                    <div class="difficulty-row">
+
+                        <span>Hard</span>
+
+                        <strong id="breakdownHard">
+                            0
+                        </strong>
+
+                        <span id="breakdownHardPercent">
+                0%
+            </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Topics -->
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>Topic Analysis</h2>
+
+                </div>
+
+                <div class="topic-chart-container">
+                    <canvas id="analyticsTopicChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <!-- Progress History -->
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>Progress History</h2>
+
+                </div>
+
+                <div class="analytics-chart-container">
+                    <canvas id="analyticsProgressChart"></canvas>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="/js/analytics.js"></script>
+
+</body>
+
+</html>

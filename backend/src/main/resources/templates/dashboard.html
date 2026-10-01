@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DSA Progress Analyzer</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">◆</div>
+
+            <div>
+                <h2>DSA Progress</h2>
+                <span>Analyzer</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="#" class="nav-item active">
+                <span>▣</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>✦</span>
+                <span>AI Coach</span>
+            </a>
+
+            <a href="/problems-page" class="nav-item">
+                <span>☷</span>
+                <span>Problems</span>
+            </a>
+
+            <a href="/analytics" class="nav-item">
+                <span>▥</span>
+                <span>Analytics</span>
+            </a>
+
+            <a href="/progress" class="nav-item">
+                <span>↗</span>
+                <span>Progress</span>
+            </a>
+
+            <a href="/github" class="nav-item">
+                <span>◈</span>
+                <span>GitHub</span>
+            </a>
+
+            <a href="/settings" class="nav-item">
+                <span>⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <!-- User -->
+        <div class="sidebar-user">
+
+            <div class="avatar">V</div>
+
+            <div>
+                <strong>Vinayaka</strong>
+                <small>DSA Student</small>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main area -->
+    <main class="main">
+
+        <!-- Top bar -->
+        <header class="topbar">
+
+            <div class="search-box">
+                <span>⌕</span>
+                <input
+                        type="text"
+                        placeholder="Search problems, topics..."
+                >
+            </div>
+
+            <div class="top-user">
+
+                <div class="notification">
+                    ♧
+                    <span>1</span>
+                </div>
+
+                <strong>Vinayaka</strong>
+
+                <div class="avatar small">V</div>
+
+                <span>⌄</span>
+
+            </div>
+
+        </header>
+
+
+        <!-- Dashboard content -->
+        <section class="dashboard">
+
+            <div class="page-heading">
+
+                <div>
+                    <h1>DSA Dashboard</h1>
+
+                    <p>
+                        Track your data structures & algorithms
+                        progress and insights
+                    </p>
+                </div>
+
+                <button class="export-btn">
+                    ↓ Export Report
+                </button>
+
+            </div>
+
+
+            <!-- Statistics -->
+            <div class="stats-grid">
+
+                <div class="stat-card solved">
+                    <div class="stat-icon">ⓘ</div>
+
+                    <div class="stat-number">00</div>
+
+                    <div class="stat-label">
+                        Solved
+                    </div>
+
+                    <div class="stat-change">
+                        +12 this week ↑
+                    </div>
+                </div>
+
+
+                <div class="stat-card easy">
+                    <div class="stat-icon">▥</div>
+
+                    <div class="stat-number">0</div>
+
+                    <div class="stat-label">
+                        Easy
+                    </div>
+
+                    <div class="stat-change">
+                        +5 this week ↑
+                    </div>
+                </div>
+
+
+                <div class="stat-card medium">
+                    <div class="stat-icon">🔥</div>
+
+                    <div class="stat-number">0</div>
+
+                    <div class="stat-label">
+                        Medium
+                    </div>
+
+                    <div class="stat-change">
+                        +7 this week ↑
+                    </div>
+                </div>
+
+
+                <div class="stat-card hard">
+                    <div class="stat-icon">★</div>
+
+                    <div class="stat-number">0</div>
+
+                    <div class="stat-label">
+                        Hard
+                    </div>
+
+                    <div class="stat-change">
+                        +1 this week ↑
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Charts section -->
+            <div class="content-grid">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <h2>Difficulty Distribution</h2>
+                        <span>•••</span>
+                    </div>
+
+                    <div class="chart-placeholder">
+                        <canvas id="difficultyChart"></canvas>
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <h2>Topic Progress</h2>
+                        <span>•••</span>
+                    </div>
+                    <div class="topic-placeholder">
+                        <canvas id="topicChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI Insight -->
+            <div class="ai-insight">
+
+                <div class="ai-icon">
+                    ✦
+                </div>
+
+                <div class="ai-content">
+
+                    <div class="ai-title">
+                        AI Insight
+                        <span>NEW</span>
+                    </div>
+
+                    <p>
+                        Your personalized DSA insights will appear here.
+                    </p>
+
+                </div>
+
+                <button class="ai-button">
+                    Ask AI Coach →
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+<script src="/js/dashboard.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - DSA Progress Analyzer</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">◆</div>
+            <div>
+                <h2>DSA Progress</h2>
+                <span>Analyzer</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard" class="nav-item">
+                <span>▣</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>✦</span>
+                <span>AI Coach</span>
+            </a>
+
+            <a href="/problems-page" class="nav-item">
+                <span>☷</span>
+                <span>Problems</span>
+            </a>
+
+            <a href="/analytics" class="nav-item">
+                <span>▥</span>
+                <span>Analytics</span>
+            </a>
+
+            <a href="/progress" class="nav-item">
+                <span>↗</span>
+                <span>Progress</span>
+            </a>
+
+            <a href="/github" class="nav-item">
+                <span>◈</span>
+                <span>GitHub</span>
+            </a>
+
+            <a href="/settings" class="nav-item active">
+                <span>⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-user">
+            <div class="avatar">V</div>
+            <div>
+                <strong>Vinayaka</strong>
+                <small>DSA Student</small>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <div class="search-box">
+                <span>⌕</span>
+                <input type="text" placeholder="Search settings...">
+            </div>
+
+            <div class="top-user">
+
+                <div class="notification">
+                    ♧
+                    <span>1</span>
+                </div>
+
+                <strong>Vinayaka</strong>
+
+                <div class="avatar small">V</div>
+
+            </div>
+
+        </header>
+
+        <!-- Settings Content -->
+        <section class="dashboard">
+
+            <div class="page-heading">
+                <div>
+                    <h1>Settings</h1>
+                    <p>Manage your profile, GitHub connection, and DSA goals.</p>
+                </div>
+            </div>
+
+            <!-- Profile -->
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h2>User Profile</h2>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="userName">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="userEmail">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- GitHub -->
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h2>GitHub</h2>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>GitHub Username</label>
+                        <input type="text" id="githubUsername">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Repository</label>
+                        <input type="text" id="repositoryName">
+                    </div>
+
+                </div>
+
+                <p>
+                    Status:
+                    <strong id="githubStatus">Checking...</strong>
+                </p>
+
+            </div>
+
+            <!-- Goals -->
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h2>Goal Settings</h2>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Weekly Goal</label>
+                        <input type="number" id="weeklyGoal" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Monthly Goal</label>
+                        <input type="number" id="monthlyGoal" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Target Goal</label>
+                        <input type="number" id="targetGoal" min="1">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Save -->
+            <div class="panel">
+
+                <button id="saveSettingsBtn" class="export-btn">
+                    Save Settings
+                </button>
+
+                <span id="saveMessage"></span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="/js/settings.js"></script>
+
+</body>
+</html>

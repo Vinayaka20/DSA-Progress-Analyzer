@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GitHub - DSA Progress Analyzer</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">◆</div>
+
+            <div>
+                <h2>DSA Progress</h2>
+                <span>Analyzer</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard" class="nav-item">
+                <span>▣</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>✦</span>
+                <span>AI Coach</span>
+            </a>
+
+            <a href="/problems-page" class="nav-item">
+                <span>☷</span>
+                <span>Problems</span>
+            </a>
+
+            <a href="/analytics" class="nav-item">
+                <span>▥</span>
+                <span>Analytics</span>
+            </a>
+
+            <a href="/progress" class="nav-item">
+                <span>↗</span>
+                <span>Progress</span>
+            </a>
+
+            <a href="/github" class="nav-item active">
+                <span>◈</span>
+                <span>GitHub</span>
+            </a>
+            <a href="/settings" class="nav-item">
+                <span>⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-user">
+
+            <div class="avatar">V</div>
+
+            <div>
+                <strong>Vinayaka</strong>
+                <small>DSA Student</small>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <div class="search-box">
+                <span>⌕</span>
+
+                <input
+                        type="text"
+                        placeholder="Search problems, topics..."
+                >
+            </div>
+
+            <div class="top-user">
+
+                <div class="notification">
+                    ♧
+                    <span>1</span>
+                </div>
+
+                <strong>Vinayaka</strong>
+
+                <div class="avatar small">V</div>
+
+                <span>⌄</span>
+
+            </div>
+
+        </header>
+
+
+        <!-- GitHub content -->
+        <section class="dashboard">
+
+            <div class="page-heading">
+
+                <div>
+
+                    <h1>GitHub Integration</h1>
+
+                    <p>
+                        Manage your GitHub account and synchronize your DSA problems.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- GitHub account -->
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>Connected Account</h2>
+
+                    <span id="githubStatus">● Checking...</span>
+
+                </div>
+
+                <div class="github-account">
+
+                    <div class="avatar">
+                        V
+                    </div>
+
+                    <div class="github-info">
+
+                        <strong id="githubUsername">
+                            Loading...
+                        </strong>
+
+                        <small>
+                            GitHub Account
+                        </small>
+
+                    </div>
+
+                    <a
+                            href="/github/login?userId=2"
+                            class="ai-button">
+                        Connect / Reconnect GitHub →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Repository -->
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>Selected Repository</h2>
+
+                </div>
+
+                <div class="github-repository">
+
+                    <div>
+
+                        <strong id="repositoryName">
+                            Loading...
+                        </strong>
+
+                        <p>
+                            Repository containing your DSA solutions.
+                        </p>
+
+                    </div>
+
+                    <span class="repo-status">
+                        Selected
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Sync -->
+            <div class="ai-insight">
+
+                <div class="ai-icon">
+                    ↻
+                </div>
+
+                <div class="ai-content">
+
+                    <div class="ai-title">
+                        Synchronize DSA Problems
+                    </div>
+
+                    <p id="syncMessage">
+                        Sync your latest GitHub solutions with the DSA database.
+                    </p>
+
+                </div>
+
+                <button
+                        class="ai-button"
+                        id="syncButton"
+                        onclick="syncGitHub()">
+
+                    Sync Now →
+
+                </button>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="/js/github.js"></script>
+
+</body>
+</html>
