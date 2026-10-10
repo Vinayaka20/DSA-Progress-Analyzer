@@ -2,6 +2,7 @@ package com.vinayaka.dsa.entity;
 
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "github_accounts")
@@ -16,6 +17,8 @@ public class GitHubAccount {
 
     @Column(nullable = false)
     private String githubUsername;
+
+    private LocalDateTime lastSyncedAt;
 
     public Long getId() {
         return id;
@@ -80,4 +83,12 @@ public class GitHubAccount {
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
+
+    public LocalDateTime getLastSyncedAt() {
+        return lastSyncedAt;
+    }
+
+    public void setLastSyncedAt(LocalDateTime lastSyncedAt) {
+        this.lastSyncedAt = lastSyncedAt;
+    }
 }

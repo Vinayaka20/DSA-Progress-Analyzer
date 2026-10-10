@@ -49,10 +49,10 @@
                 <span>Progress</span>
             </a>
 
-            <a href="/github" class="nav-item">
-                <span>◈</span>
-                <span>GitHub</span>
-            </a>
+<!--            <a href="/github" class="nav-item">-->
+<!--                <span>◈</span>-->
+<!--                <span>GitHub</span>-->
+<!--            </a>-->
 
             <a href="/settings" class="nav-item active">
                 <span>⚙</span>
@@ -131,30 +131,185 @@
             </div>
 
             <!-- GitHub -->
-            <div class="panel">
+            <!-- GitHub Integration -->
+            <div class="panel github-panel">
 
-                <div class="panel-header">
-                    <h2>GitHub</h2>
-                </div>
-
-                <div class="form-grid">
-
-                    <div class="form-group">
-                        <label>GitHub Username</label>
-                        <input type="text" id="githubUsername">
+                <div class="panel-header github-header">
+                    <div>
+                        <h2>GitHub Integration</h2>
+                        <p class="github-subtitle">
+                            Connect your GitHub repository to track your DSA progress automatically.
+                        </p>
                     </div>
 
-                    <div class="form-group">
-                        <label>Repository</label>
-                        <input type="text" id="repositoryName">
+                    <span id="githubStatusBadge" class="github-status-badge checking">
+            Checking...
+        </span>
+                </div>
+
+
+                <!-- GitHub Account -->
+                <div class="github-account-row">
+
+                    <div class="github-account-icon">
+                        ◈
+                    </div>
+
+                    <div class="github-account-info">
+
+            <span class="github-label">
+                GitHub Account
+            </span>
+
+                        <strong id="githubUsername">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+                    <button
+                            type="button"
+                            id="viewGithubBtn"
+                            class="github-outline-btn">
+                        View Profile ↗
+                    </button>
+
+                </div>
+
+
+                <!-- Repository -->
+                <div class="form-group github-repository-group">
+                    <label for="repositoryName">Repository</label>
+
+                    <div id="repositoryName" class="github-repository-display">
+                        Loading...
+                    </div>
+
+                    <small class="field-hint">
+                        Your connected LeetCode solutions repository.
+                    </small>
+                </div>
+
+
+                <!-- Connection information -->
+                <div class="github-connection-info">
+
+                    <div class="connection-icon">
+                        ✓
+                    </div>
+
+                    <div>
+                        <strong id="githubConnectionTitle">
+                            GitHub connection
+                        </strong>
+
+                        <p id="githubConnectionMessage">
+                            Checking your GitHub connection...
+                        </p>
                     </div>
 
                 </div>
 
-                <p>
-                    Status:
-                    <strong id="githubStatus">Checking...</strong>
-                </p>
+
+                <!-- Actions -->
+                <div class="github-actions">
+
+                    <button
+                            type="button"
+                            id="testGithubBtn"
+                            class="github-secondary-btn">
+
+                        ✓ Test Connection
+
+                    </button>
+
+                    <button
+                            type="button"
+                            id="syncGithubBtn"
+                            class="github-primary-btn">
+
+                        ⟳ Sync GitHub Now
+
+                    </button>
+
+                </div>
+
+
+                <!-- Last Sync -->
+                <div class="github-last-sync">
+
+                    <span>Last Sync</span>
+
+                    <strong id="lastSyncText">
+                        Not synced yet
+                    </strong>
+
+                </div>
+
+
+                <!-- Sync statistics -->
+                <div class="github-sync-stats">
+
+                    <div class="github-stat">
+
+                        <strong id="githubProblemsCount">
+                            —
+                        </strong>
+
+                        <span>
+                Problems Synced
+            </span>
+
+                    </div>
+
+                    <div class="github-stat">
+
+                        <strong id="githubRepositoryCount">
+                            —
+                        </strong>
+
+                        <span>
+                Repositories
+            </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Disconnect -->
+                <div class="github-danger-zone">
+
+                    <div>
+
+                        <strong>
+                            Disconnect GitHub
+                        </strong>
+
+                        <p>
+                            Remove the GitHub connection from your account.
+                            Your existing DSA progress will not be deleted.
+                        </p>
+
+                    </div>
+
+                    <button
+                            type="button"
+                            id="disconnectGithubBtn"
+                            class="github-danger-btn">
+
+                        Disconnect
+
+                    </button>
+
+                </div>
+
+
+                <!-- GitHub message -->
+                <div
+                        id="githubMessage"
+                        class="github-message">
+                </div>
 
             </div>
 
@@ -203,6 +358,7 @@
 
 </div>
 
+<script src="/js/config.js"></script>
 <script src="/js/settings.js"></script>
 
 </body>

@@ -1,46 +1,44 @@
 package com.vinayaka.dsa.service;
+import java.time.LocalDateTime;
 
-import com.vinayaka.dsa.entity.GitHubAccount;
-import com.vinayaka.dsa.entity.User;
-import com.vinayaka.dsa.repository.GitHubAccountRepository;
-import com.vinayaka.dsa.repository.UserRepository;
-import org.springframework.stereotype.Service;
-
+import com.vinayaka.dsa.DSAProblemResponse;
+import com.vinayaka.dsa.DSAProgressResponse;
+import com.vinayaka.dsa.DashboardResponse;
+import com.vinayaka.dsa.DifficultyProgressResponse;
+import com.vinayaka.dsa.GitHubContentResponse;
 import com.vinayaka.dsa.GitHubRepositoryResponse;
+import com.vinayaka.dsa.LeetCodeProblemResponse;
+import com.vinayaka.dsa.SolvedProblemResponse;
+import com.vinayaka.dsa.TopicProgressResponse;
+import com.vinayaka.dsa.entity.GitHubAccount;
+import com.vinayaka.dsa.entity.Problem;
+import com.vinayaka.dsa.entity.ProgressHistory;
+import com.vinayaka.dsa.entity.Topic;
+import com.vinayaka.dsa.entity.User;
+import com.vinayaka.dsa.entity.UserProblem;
+import com.vinayaka.dsa.repository.GitHubAccountRepository;
+import com.vinayaka.dsa.repository.ProblemRepository;
+import com.vinayaka.dsa.repository.ProgressHistoryRepository;
+import com.vinayaka.dsa.repository.TopicRepository;
+import com.vinayaka.dsa.repository.UserProblemRepository;
+import com.vinayaka.dsa.repository.UserRepository;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.http.HttpStatus;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import com.vinayaka.dsa.GitHubContentResponse;
-
-import com.vinayaka.dsa.DSAProgressResponse;
-import com.vinayaka.dsa.GitHubContentResponse;
-import com.vinayaka.dsa.DSAProblemResponse;
-
-import com.vinayaka.dsa.entity.Problem;
-import com.vinayaka.dsa.repository.ProblemRepository;
-import com.vinayaka.dsa.LeetCodeProblemResponse;
-import com.vinayaka.dsa.TopicProgressResponse;
-import com.vinayaka.dsa.DifficultyProgressResponse;
-import com.vinayaka.dsa.repository.TopicRepository;
-import com.vinayaka.dsa.entity.Topic;
-import com.vinayaka.dsa.entity.User;
-import com.vinayaka.dsa.SolvedProblemResponse;
-import com.vinayaka.dsa.repository.ProgressHistoryRepository;
-import com.vinayaka.dsa.entity.ProgressHistory;
-import com.vinayaka.dsa.DashboardResponse;
-
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Map;
-
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GitHubAccountService {
@@ -50,20 +48,23 @@ public class GitHubAccountService {
     private final ProblemRepository problemRepository;
     private final TopicRepository topicRepository;
     private final ProgressHistoryRepository progressHistoryRepository;
+    private final UserProblemRepository userProblemRepository;
 
     public GitHubAccountService(
             GitHubAccountRepository gitHubAccountRepository,
             UserRepository userRepository,
             ProblemRepository problemRepository,
             TopicRepository topicRepository,
-            ProgressHistoryRepository progressHistoryRepository) {
+            ProgressHistoryRepository progressHistoryRepository, UserProblemRepository userProblemRepository) {
 
         this.gitHubAccountRepository = gitHubAccountRepository;
         this.userRepository = userRepository;
         this.problemRepository = problemRepository;
         this.topicRepository = topicRepository;
         this.progressHistoryRepository = progressHistoryRepository;
+        this.userProblemRepository = userProblemRepository;
     }
+
     public GitHubAccount createGitHubAccount(GitHubAccount gitHubAccount) {
         return gitHubAccountRepository.save(gitHubAccount);
     }
@@ -322,8 +323,15 @@ public class GitHubAccountService {
     public List<DSAProblemResponse> getSolvedProblemsFromGitHub(Long userId) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        GitHubAccount githubAccount =
+                gitHubAccountRepository.findByUser(user)
+                        .orElseThrow(() -> new RuntimeException("GitHub account not found"));
+
+        String githubUsername = githubAccount.getGithubUsername();
+        String repositoryName = githubAccount.getRepositoryName();
+        String accessToken = githubAccount.getAccessToken();
 
         List<GitHubContentResponse> contents =
                 getSelectedRepositoryContents(userId);
@@ -385,6 +393,54 @@ public class GitHubAccountService {
 
                     userRepository.save(user);
 
+
+// Find existing UserProblem
+                    UserProblem userProblem =
+                            userProblemRepository
+                                    .findByUserAndProblem(user, problem)
+                                    .orElse(null);
+
+
+// Create it if it doesn't exist
+                    if (userProblem == null) {
+
+                        userProblem = new UserProblem();
+
+                        userProblem.setUser(user);
+                        userProblem.setProblem(problem);
+                    }
+
+
+// Find the actual LeetHub solution file
+                    String solutionFilePath = getSolutionFilePath(
+                            githubUsername,
+                            repositoryName,
+                            content.getPath(),
+                            accessToken
+                    );
+
+                    // Get the latest GitHub commit date for the actual solution file
+                    if (solutionFilePath != null) {
+
+                        LocalDate commitDate = getLatestCommitDate(
+                                githubUsername,
+                                repositoryName,
+                                solutionFilePath,
+                                accessToken
+                        );
+
+                        // Update solved date from GitHub
+                        if (commitDate != null) {
+                            userProblem.setSolvedDate(commitDate);
+                        }
+
+                        // Store the actual solution file path
+                        userProblem.setGithubFileUrl(solutionFilePath);
+                    }
+
+                    // Save / update UserProblem
+                    userProblemRepository.save(userProblem);
+
                     try {
 
                         java.util.Set<Topic> topicEntities =
@@ -425,6 +481,10 @@ public class GitHubAccountService {
                 );
             }
         }
+
+        githubAccount.setLastSyncedAt(LocalDateTime.now());
+
+        gitHubAccountRepository.save(githubAccount);
 
         return solvedProblems;
     }
@@ -555,6 +615,7 @@ public class GitHubAccountService {
 
         return result;
     }
+
     public LeetCodeProblemResponse getLeetCodeProblem(
             String problemNumber) {
 
@@ -761,10 +822,133 @@ public class GitHubAccountService {
 
         return data.toString();
     }
+
     public GitHubAccount save(GitHubAccount account) {
         return gitHubAccountRepository.save(account);
     }
 
+    private String getSolutionFilePath(
+            String githubUsername,
+            String repositoryName,
+            String folderPath,
+            String accessToken) {
 
+        String url =
+                "https://api.github.com/repos/"
+                        + githubUsername
+                        + "/"
+                        + repositoryName
+                        + "/contents/"
+                        + folderPath;
 
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(accessToken);
+        headers.setAccept(
+                List.of(MediaType.APPLICATION_JSON)
+        );
+
+        HttpEntity<Void> request =
+                new HttpEntity<>(headers);
+
+        ResponseEntity<List> response =
+                restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        request,
+                        List.class
+                );
+
+        List<Map<String, Object>> files =
+                response.getBody();
+
+        if (files == null || files.isEmpty()) {
+            return null;
+        }
+
+        for (Map<String, Object> file : files) {
+
+            String type =
+                    (String) file.get("type");
+
+            String name =
+                    (String) file.get("name");
+
+            String path =
+                    (String) file.get("path");
+
+            // LeetHub folders contain the solution file and README.md.
+            // Ignore README.md and return the actual solution file.
+            if ("file".equals(type)
+                    && name != null
+                    && path != null
+                    && !name.equalsIgnoreCase("README.md")) {
+
+                return path;
+            }
+        }
+
+        return null;
+    }
+
+    private LocalDate getLatestCommitDate(
+            String githubUsername,
+            String repositoryName,
+            String filePath,
+            String accessToken) {
+
+        String url = UriComponentsBuilder
+                .fromUriString(
+                        "https://api.github.com/repos/"
+                                + githubUsername
+                                + "/"
+                                + repositoryName
+                                + "/commits"
+                )
+                .queryParam("path", filePath)
+                .queryParam("per_page", 1)
+                .build()
+                .encode()
+                .toUriString();
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(accessToken);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+        HttpEntity<Void> request = new HttpEntity<>(headers);
+
+        ResponseEntity<List> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                request,
+                List.class
+        );
+
+        List<Map<String, Object>> commits = response.getBody();
+
+        if (commits == null || commits.isEmpty()) {
+            return null;
+        }
+
+        Map<String, Object> firstCommit = commits.get(0);
+
+        Map<String, Object> commitDetails =
+                (Map<String, Object>) firstCommit.get("commit");
+
+        Map<String, Object> committer =
+                (Map<String, Object>) commitDetails.get("committer");
+
+        String commitDate =
+                (String) committer.get("date");
+
+        return OffsetDateTime
+                .parse(commitDate)
+                .toLocalDate();
+    }
 }
+
+
+

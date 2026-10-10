@@ -1,6 +1,7 @@
 package com.vinayaka.dsa.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,9 +24,39 @@ public class UserGoals {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    // Weekly 7-day cycle
+    @Column(name = "weekly_start_date")
+    private LocalDate weeklyStartDate;
+
+    @Column(name = "weekly_start_solved")
+    private Integer weeklyStartSolved;
+
+    // Monthly 30-day cycle
+    @Column(name = "monthly_start_date")
+    private LocalDate monthlyStartDate;
+
+    @Column(name = "monthly_start_solved")
+    private Integer monthlyStartSolved;
+
+    // Previous weekly cycle result
+    @Column(name = "previous_weekly_solved")
+    private Integer previousWeeklySolved;
+
+    @Column(name = "previous_weekly_completed")
+    private Boolean previousWeeklyCompleted;
+
+    // Previous 30-day cycle result
+    @Column(name = "previous_monthly_solved")
+    private Integer previousMonthlySolved;
+
+    @Column(name = "previous_monthly_completed")
+    private Boolean previousMonthlyCompleted;
+
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+
 
     public UserGoals() {
     }
@@ -79,5 +110,73 @@ public class UserGoals {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    // Weekly cycle getters/setters
+
+    public LocalDate getWeeklyStartDate() {
+        return weeklyStartDate;
+    }
+
+    public void setWeeklyStartDate(LocalDate weeklyStartDate) {
+        this.weeklyStartDate = weeklyStartDate;
+    }
+
+    public Integer getWeeklyStartSolved() {
+        return weeklyStartSolved;
+    }
+
+    public void setWeeklyStartSolved(Integer weeklyStartSolved) {
+        this.weeklyStartSolved = weeklyStartSolved;
+    }
+
+    // 30-day cycle getters/setters
+
+    public LocalDate getMonthlyStartDate() {
+        return monthlyStartDate;
+    }
+
+    public void setMonthlyStartDate(LocalDate monthlyStartDate) {
+        this.monthlyStartDate = monthlyStartDate;
+    }
+
+    public Integer getMonthlyStartSolved() {
+        return monthlyStartSolved;
+    }
+
+    public void setMonthlyStartSolved(Integer monthlyStartSolved) {
+        this.monthlyStartSolved = monthlyStartSolved;
+    }
+
+    public Integer getPreviousWeeklySolved() {
+        return previousWeeklySolved;
+    }
+
+    public void setPreviousWeeklySolved(Integer previousWeeklySolved) {
+        this.previousWeeklySolved = previousWeeklySolved;
+    }
+
+    public Boolean getPreviousWeeklyCompleted() {
+        return previousWeeklyCompleted;
+    }
+
+    public void setPreviousWeeklyCompleted(Boolean previousWeeklyCompleted) {
+        this.previousWeeklyCompleted = previousWeeklyCompleted;
+    }
+
+    public Integer getPreviousMonthlySolved() {
+        return previousMonthlySolved;
+    }
+
+    public void setPreviousMonthlySolved(Integer previousMonthlySolved) {
+        this.previousMonthlySolved = previousMonthlySolved;
+    }
+
+    public Boolean getPreviousMonthlyCompleted() {
+        return previousMonthlyCompleted;
+    }
+
+    public void setPreviousMonthlyCompleted(Boolean previousMonthlyCompleted) {
+        this.previousMonthlyCompleted = previousMonthlyCompleted;
     }
 }
