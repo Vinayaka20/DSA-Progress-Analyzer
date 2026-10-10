@@ -57,4 +57,11 @@ public class UserProblemController {
 
         return userProblemService.getSolvedProblemsByUserId(userId);
     }
+
+    @GetMapping("/users/{userId}/streak")
+    public Map<String, Long> getStreak(
+            @PathVariable Long userId) {
+
+        return userProblemService.getStreak(userId);
+    }
 }

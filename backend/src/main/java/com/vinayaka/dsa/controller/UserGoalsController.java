@@ -25,7 +25,15 @@ public class UserGoalsController {
         return new UserGoalsResponse(
                 goals.getWeeklyGoal(),
                 goals.getMonthlyGoal(),
-                goals.getTargetGoal()
+                goals.getTargetGoal(),
+                goals.getWeeklyStartDate(),
+                goals.getWeeklyStartSolved(),
+                goals.getMonthlyStartDate(),
+                goals.getMonthlyStartSolved(),
+                goals.getPreviousWeeklySolved(),
+                goals.getPreviousWeeklyCompleted(),
+                goals.getPreviousMonthlySolved(),
+                goals.getPreviousMonthlyCompleted()
         );
     }
 
@@ -45,7 +53,15 @@ public class UserGoalsController {
         return new UserGoalsResponse(
                 goals.getWeeklyGoal(),
                 goals.getMonthlyGoal(),
-                goals.getTargetGoal()
+                goals.getTargetGoal(),
+                goals.getWeeklyStartDate(),
+                goals.getWeeklyStartSolved(),
+                goals.getMonthlyStartDate(),
+                goals.getMonthlyStartSolved(),
+                goals.getPreviousWeeklySolved(),
+                goals.getPreviousWeeklyCompleted(),
+                goals.getPreviousMonthlySolved(),
+                goals.getPreviousMonthlyCompleted()
         );
     }
 }

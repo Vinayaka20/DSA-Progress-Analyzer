@@ -13,4 +13,6 @@ public interface GitHubAccountRepository
     List<GitHubAccount> findAllByUser(User user);
 
     Optional<GitHubAccount> findByUser(User user);
+
+
 }

@@ -1,226 +1,541 @@
-console.log("PROGRESS JS VERSION 2 LOADED", new Date().toLocaleTimeString());
+console.log(
+    "PROGRESS JS VERSION 3 LOADED",
+    new Date().toLocaleTimeString()
+);
+
 let progressHistory = [];
+
 const userId = 2;
+
 window.weeklySolved = 0;
 window.monthlySolved = 0;
 
 
+// ============================================================
+// INITIALIZE PROGRESS PAGE
+// ============================================================
 
 async function initializeProgress() {
+
     console.log("1. initialize started");
 
-        await loadGoals();
-        console.log("2. goals loaded");
+    await loadGoals();
+    console.log("2. goals loaded");
 
-        await loadDashboard();
-        console.log("3. dashboard loaded");
+    await loadDashboard();
+    console.log("3. dashboard loaded");
 
-        await loadProgressHistory();
-        console.log("4. history loaded");
+    await loadProgressHistory();
+    console.log("4. history loaded");
+
+    await loadStreaks();
+    console.log("5. streaks loaded");
 }
 
-document.addEventListener("DOMContentLoaded", initializeProgress);
+document.addEventListener(
+    "DOMContentLoaded",
+    initializeProgress
+);
 
-// Runs again when returning from another page
 
+// ============================================================
+// LOAD DASHBOARD
+// ============================================================
 
 async function loadDashboard() {
 
-    const response = await fetch(`/users/${userId}/dashboard`);
-    const data = await response.json();
+    try {
 
-    document.getElementById("totalSolved").textContent = data.totalSolved;
-    window.totalSolved = data.totalSolved;
+        const response =
+            await fetch(`/users/${userId}/dashboard`);
 
-    updateTargetProgress();
+        if (!response.ok) {
+            throw new Error("Failed to load dashboard");
+        }
+
+        const data = await response.json();
+
+        document.getElementById("totalSolved").textContent =
+            data.totalSolved;
+
+        window.totalSolved = data.totalSolved;
+
+        updateTargetProgress();
+
+    } catch (error) {
+
+        console.error(
+            "Error loading dashboard:",
+            error
+        );
+    }
 }
+
+
+// ============================================================
+// LOAD GOALS
+// ============================================================
 
 async function loadGoals() {
 
-    const response = await fetch(`/users/${userId}/goals`);
-    const data = await response.json();
+    try {
 
-    console.log("API returned:", data);
+        const response =
+            await fetch(`/users/${userId}/goals`);
 
-    window.weeklyGoal = data.weeklyGoal;
-    window.monthlyGoal = data.monthlyGoal;
-    window.targetGoal = data.targetGoal;
+        if (!response.ok) {
+            throw new Error("Failed to load goals");
+        }
 
-    console.log("Window values:", window.weeklyGoal, window.monthlyGoal);
+        const data = await response.json();
 
-    updateTargetProgress();
+        console.log("API returned:", data);
 
-    if (progressHistory.length > 0) {
-        calculateWeeklyMonthlyProgress(progressHistory);
+
+        // Current goals
+        window.weeklyGoal =
+            data.weeklyGoal;
+
+        window.monthlyGoal =
+            data.monthlyGoal;
+
+        window.targetGoal =
+            data.targetGoal;
+
+
+        // Current weekly cycle
+        window.weeklyStartDate =
+            data.weeklyStartDate;
+
+        window.weeklyStartSolved =
+            data.weeklyStartSolved;
+
+
+        // Current monthly cycle
+        window.monthlyStartDate =
+            data.monthlyStartDate;
+
+        window.monthlyStartSolved =
+            data.monthlyStartSolved;
+
+
+        // Previous weekly cycle
+        window.previousWeeklySolved =
+            data.previousWeeklySolved;
+
+        window.previousWeeklyCompleted =
+            data.previousWeeklyCompleted;
+
+
+        // Previous monthly cycle
+        window.previousMonthlySolved =
+            data.previousMonthlySolved;
+
+        window.previousMonthlyCompleted =
+            data.previousMonthlyCompleted;
+
+
+        console.log(
+            "Window values:",
+            window.weeklyGoal,
+            window.monthlyGoal
+        );
+
+
+        updateTargetProgress();
+
+        calculateWeeklyMonthlyProgress();
+
+    } catch (error) {
+
+        console.error(
+            "Error loading goals:",
+            error
+        );
     }
 }
+
+
+// ============================================================
+// LOAD PROGRESS HISTORY
+// ============================================================
 
 async function loadProgressHistory() {
 
-    const response = await fetch(`/users/${userId}/progress-history`);
-    const data = await response.json();
+    try {
 
-    progressHistory = data.sort(
-        (a, b) => new Date(a.date) - new Date(b.date)
+        const response =
+            await fetch(
+                `/users/${userId}/progress-history`
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                "Failed to load progress history"
+            );
+        }
+
+        const data = await response.json();
+
+        progressHistory = data.sort(
+            (a, b) =>
+                new Date(a.date) -
+                new Date(b.date)
+        );
+
+
+        /*
+         * IMPORTANT:
+         *
+         * Progress history is NO LONGER used
+         * for calculating streaks.
+         *
+         * Streaks come from:
+         *
+         * /users/{userId}/streak
+         *
+         * which uses GitHub solution commit dates
+         * stored in UserProblem.solvedDate.
+         */
+
+
+        calculateWeeklyMonthlyProgress();
+
+        console.log(
+            "5. updateGoalBars should have run"
+        );
+
+        console.log(
+            document.getElementById(
+                "weeklyGoalText"
+            ).textContent
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Error loading progress history:",
+            error
+        );
+    }
+}
+
+
+// ============================================================
+// LOAD STREAKS FROM BACKEND
+// ============================================================
+
+async function loadStreaks() {
+
+    try {
+
+        const response =
+            await fetch(
+                `/users/${userId}/streak`
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                "Failed to load streak"
+            );
+        }
+
+        const data =
+            await response.json();
+
+        console.log(
+            "Streak API returned:",
+            data
+        );
+
+
+        // Update current streak
+        document.getElementById(
+            "currentStreak"
+        ).textContent =
+            data.currentStreak;
+
+
+        // Update longest streak
+        document.getElementById(
+            "longestStreak"
+        ).textContent =
+            data.longestStreak;
+
+
+    } catch (error) {
+
+        console.error(
+            "Error loading streak:",
+            error
+        );
+
+
+        // Safe fallback
+        document.getElementById(
+            "currentStreak"
+        ).textContent = 0;
+
+        document.getElementById(
+            "longestStreak"
+        ).textContent = 0;
+    }
+}
+
+
+// ============================================================
+// WEEKLY + MONTHLY PROGRESS
+// ============================================================
+
+function calculateWeeklyMonthlyProgress() {
+
+    if (
+        window.totalSolved === undefined ||
+        window.weeklyStartSolved === undefined ||
+        window.monthlyStartSolved === undefined
+    ) {
+        return;
+    }
+
+
+    // Calculate weekly progress
+    const weeklySolved =
+        Math.max(
+            window.totalSolved -
+            window.weeklyStartSolved,
+            0
+        );
+
+
+    // Calculate monthly progress
+    const monthlySolved =
+        Math.max(
+            window.totalSolved -
+            window.monthlyStartSolved,
+            0
+        );
+
+
+    window.weeklySolved =
+        weeklySolved;
+
+    window.monthlySolved =
+        monthlySolved;
+
+
+    updateGoalBars(
+        weeklySolved,
+        monthlySolved
     );
 
-    calculateStreaks(progressHistory);
-    calculateWeeklyMonthlyProgress(progressHistory);
-    console.log("5. updateGoalBars should have run");
-    console.log(document.getElementById("weeklyGoalText").textContent);
+    updateGoalResults();
 }
 
-function calculateStreaks(data) {
 
-    if (data.length === 0) {
-        return;
+// ============================================================
+// UPDATE GOAL RESULT MESSAGES
+// ============================================================
+
+function updateGoalResults() {
+
+    const weeklyResult =
+        document.getElementById(
+            "weeklyResult"
+        );
+
+    const monthlyResult =
+        document.getElementById(
+            "monthlyResult"
+        );
+
+
+    // Clear previous messages
+    weeklyResult.textContent = "";
+
+    monthlyResult.textContent = "";
+
+
+    // ========================================================
+    // CURRENT WEEKLY GOAL
+    // ========================================================
+
+    if (
+        window.weeklySolved >=
+            window.weeklyGoal &&
+        window.weeklyGoal > 0
+    ) {
+
+        weeklyResult.textContent =
+            `🎉 Weekly Goal Completed! You solved ${window.weeklySolved} / ${window.weeklyGoal}.`;
+
     }
 
-    let longest = 1;
-    let current = 1;
 
-    for (let i = 1; i < data.length; i++) {
+    // Previous weekly cycle completed
+    else if (
+        window.previousWeeklyCompleted === true
+    ) {
 
-        const previous = new Date(data[i - 1].date);
-        const currentDate = new Date(data[i].date);
-
-        const difference =
-            (currentDate - previous) / 86400000;
-
-        if (difference === 1) {
-
-            current++;
-
-        } else {
-
-            current = 1;
-
-        }
-
-        longest = Math.max(longest, current);
+        weeklyResult.textContent =
+            `🎉 Previous week completed! You solved ${window.previousWeeklySolved} / ${window.weeklyGoal}.`;
 
     }
 
-    // Check if the latest activity is today or yesterday
-    const latestDate = new Date(data[data.length - 1].date);
-    const today = new Date();
 
-    latestDate.setHours(0,0,0,0);
-    today.setHours(0,0,0,0);
+    // Previous weekly cycle not completed
+    else if (
+        window.previousWeeklyCompleted === false &&
+        window.previousWeeklySolved !== null &&
+        window.previousWeeklySolved !== undefined
+    ) {
 
-    const daysSinceLastActivity =
-        (today - latestDate) / 86400000;
-
-    if (daysSinceLastActivity > 1) {
-        current = 0;
+        weeklyResult.textContent =
+            `👏 Well played! You solved ${window.previousWeeklySolved} / ${window.weeklyGoal}.`;
     }
 
-    document.getElementById("currentStreak").textContent = current;
-    document.getElementById("longestStreak").textContent = longest;
+
+    // ========================================================
+    // CURRENT 30-DAY GOAL
+    // ========================================================
+
+    if (
+        window.monthlySolved >=
+            window.monthlyGoal &&
+        window.monthlyGoal > 0
+    ) {
+
+        monthlyResult.textContent =
+            `🎉 30-Day Goal Completed! You solved ${window.monthlySolved} / ${window.monthlyGoal}.`;
+
+    }
+
+
+    // Previous monthly cycle completed
+    else if (
+        window.previousMonthlyCompleted === true
+    ) {
+
+        monthlyResult.textContent =
+            `🎉 Previous 30-day goal completed! You solved ${window.previousMonthlySolved} / ${window.monthlyGoal}.`;
+
+    }
+
+
+    // Previous monthly cycle not completed
+    else if (
+        window.previousMonthlyCompleted === false &&
+        window.previousMonthlySolved !== null &&
+        window.previousMonthlySolved !== undefined
+    ) {
+
+        monthlyResult.textContent =
+            `👏 Well played! You solved ${window.previousMonthlySolved} / ${window.monthlyGoal}.`;
+    }
 }
 
-function calculateWeeklyMonthlyProgress(data) {
 
-    if (data.length === 0) return;
-
-    let weeklySolved = 0;
-    let monthlySolved = 0;
-
-  const today = new Date();
-  today.setHours(0,0,0,0);
-
-    const sevenDaysAgo =
-        new Date(today);
-
-    sevenDaysAgo.setDate(today.getDate() - 6);
-
-    const currentMonth =
-        today.getMonth();
-
-    const currentYear =
-        today.getFullYear();
-
-    for (let i = 1; i < data.length; i++) {
-
-        const date =
-            new Date(data[i].date);
-
-        const increase =
-            data[i].totalSolved -
-            data[i - 1].totalSolved;
-
-        if (date >= sevenDaysAgo) {
-
-            weeklySolved += increase;
-
-        }
-
-        if (
-            date.getMonth() === currentMonth &&
-            date.getFullYear() === currentYear
-        ) {
-
-            monthlySolved += increase;
-
-        }
-
-    }
-
-   window.weeklySolved = weeklySolved;
-   window.monthlySolved = monthlySolved;
-
-   updateGoalBars(weeklySolved, monthlySolved);
-
-}
+// ============================================================
+// UPDATE WEEKLY + MONTHLY GOAL BARS
+// ============================================================
 
 function updateGoalBars(
-        weeklySolved,
-        monthlySolved) {
+    weeklySolved,
+    monthlySolved
+) {
 
-    if (!window.weeklyGoal || !window.monthlyGoal)
+    if (
+        !window.weeklyGoal ||
+        !window.monthlyGoal
+    ) {
         return;
+    }
 
-    document.getElementById("weeklyGoalText").textContent =
+
+    // Weekly text
+    document.getElementById(
+        "weeklyGoalText"
+    ).textContent =
         `${weeklySolved} / ${window.weeklyGoal}`;
 
-    document.getElementById("monthlyGoalText").textContent =
+
+    // Monthly text
+    document.getElementById(
+        "monthlyGoalText"
+    ).textContent =
         `${monthlySolved} / ${window.monthlyGoal}`;
 
-    document.getElementById("weeklyBar").style.width =
+
+    // Weekly progress bar
+    document.getElementById(
+        "weeklyBar"
+    ).style.width =
         `${Math.min(
-            (weeklySolved / window.weeklyGoal) * 100,
+            (weeklySolved /
+                window.weeklyGoal) *
+                100,
             100
         )}%`;
 
-    document.getElementById("monthlyBar").style.width =
+
+    // Monthly progress bar
+    document.getElementById(
+        "monthlyBar"
+    ).style.width =
         `${Math.min(
-            (monthlySolved / window.monthlyGoal) * 100,
+            (monthlySolved /
+                window.monthlyGoal) *
+                100,
             100
         )}%`;
-
 }
+
+
+// ============================================================
+// UPDATE TARGET PROGRESS
+// ============================================================
 
 function updateTargetProgress() {
 
-    if (!window.totalSolved || !window.targetGoal)
+    if (
+        window.totalSolved === undefined ||
+        window.targetGoal === undefined ||
+        window.targetGoal <= 0
+    ) {
         return;
+    }
 
-    document.getElementById("targetGoalText").textContent =
+
+    // Target text
+    document.getElementById(
+        "targetGoalText"
+    ).textContent =
         `${window.totalSolved} / ${window.targetGoal}`;
 
+
+    // Calculate percentage
     const percentage =
         Math.min(
-            (window.totalSolved / window.targetGoal) * 100,
+            (window.totalSolved /
+                window.targetGoal) *
+                100,
             100
         );
 
-    document.getElementById("targetBar").style.width =
+
+    // Target progress bar
+    document.getElementById(
+        "targetBar"
+    ).style.width =
         `${percentage}%`;
 
-    document.getElementById("remainingText").textContent =
+
+    // Remaining problems
+    document.getElementById(
+        "remainingText"
+    ).textContent =
         `Remaining: ${Math.max(
-            window.targetGoal - window.totalSolved,
+            window.targetGoal -
+            window.totalSolved,
             0
         )}`;
-
 }
