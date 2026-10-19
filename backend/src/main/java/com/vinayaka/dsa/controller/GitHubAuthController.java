@@ -1,4 +1,5 @@
 package com.vinayaka.dsa.controller;
+import org.springframework.http.HttpStatus;
 
 import com.vinayaka.dsa.GitHubRepositoryResponse;
 import com.vinayaka.dsa.entity.GitHubAccount;
@@ -60,7 +61,7 @@ public class GitHubAuthController {
 
     // 2. GitHub redirects back here after authorization
     @GetMapping("/github/callback")
-    public String githubCallback(
+    public ResponseEntity<String> githubCallback(
             @RequestParam String code,
             @RequestParam String state) {
 
@@ -71,7 +72,8 @@ public class GitHubAuthController {
         User user = userRepository.findById(userId).orElse(null);
 
         if (user == null) {
-            return "User not found";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("User not found");
         }
 
         // Exchange authorization code for access token
@@ -167,7 +169,32 @@ public class GitHubAuthController {
 
         gitHubAccountRepository.save(githubAccount);
 
-        return "GitHub connected successfully";
+        String html = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>GitHub Connected</title>
+    </head>
+    <body>
+        <script>
+            if (window.opener && !window.opener.closed) {
+                window.opener.postMessage(
+                    { type: "GITHUB_OAUTH_SUCCESS" },
+                    window.location.origin
+                );
+                window.close();
+            } else {
+                window.location.replace("/settings?github=connected");
+            }
+        </script>
+        <p>GitHub connected successfully. You can return to Settings.</p>
+    </body>
+    </html>
+    """;
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_HTML)
+                .body(html);
     }
 
     // 3. Get repositories using the saved access token
