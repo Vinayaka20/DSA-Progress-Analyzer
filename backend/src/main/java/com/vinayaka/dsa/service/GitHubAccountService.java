@@ -217,32 +217,37 @@ public class GitHubAccountService {
 
     public List<GitHubContentResponse> getSelectedRepositoryContents(Long userId) {
 
-        User user = userRepository.findById(userId).orElse(null);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found: " + userId));
 
-        if (user == null) {
-            return List.of();
+        GitHubAccount githubAccount = gitHubAccountRepository.findByUser(user)
+                .orElseThrow(() ->
+                        new RuntimeException("GitHub account not connected"));
+
+        String repositoryName = githubAccount.getRepositoryName();
+        String githubUsername = githubAccount.getGithubUsername();
+        String accessToken = githubAccount.getAccessToken();
+
+        if (repositoryName == null
+                || repositoryName.isBlank()
+                || repositoryName.equalsIgnoreCase("Not selected")) {
+            throw new IllegalStateException(
+                    "Please select a GitHub repository before syncing."
+            );
         }
 
-        GitHubAccount githubAccount =
-                gitHubAccountRepository.findByUser(user).orElse(null);
-
-        if (githubAccount == null) {
-            return List.of();
+        if (githubUsername == null || githubUsername.isBlank()) {
+            throw new IllegalStateException(
+                    "GitHub username is missing."
+            );
         }
 
-        String repositoryName =
-                githubAccount.getRepositoryName();
-
-        if (repositoryName == null ||
-                repositoryName.equals("Not selected")) {
-            return List.of();
+        if (accessToken == null || accessToken.isBlank()) {
+            throw new IllegalStateException(
+                    "GitHub access token is missing."
+            );
         }
-
-        String githubUsername =
-                githubAccount.getGithubUsername();
-
-        String accessToken =
-                githubAccount.getAccessToken();
 
         String repositoryUrl =
                 "https://api.github.com/repos/"
@@ -254,49 +259,45 @@ public class GitHubAccountService {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
-
         headers.setBearerAuth(accessToken);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-        headers.setAccept(
-                List.of(MediaType.APPLICATION_JSON)
+        HttpEntity<Void> request = new HttpEntity<>(headers);
+
+        ResponseEntity<List> response = restTemplate.exchange(
+                repositoryUrl,
+                HttpMethod.GET,
+                request,
+                List.class
         );
 
-        HttpEntity<Void> request =
-                new HttpEntity<>(headers);
+        List<Map<String, Object>> contents = response.getBody();
 
-        ResponseEntity<List> response =
-                restTemplate.exchange(
-                        repositoryUrl,
-                        HttpMethod.GET,
-                        request,
-                        List.class
-                );
+        if (contents == null) {
+            throw new IllegalStateException(
+                    "GitHub returned an empty response for repository: "
+                            + repositoryName
+            );
+        }
 
-        List<Map<String, Object>> contents =
-                response.getBody();
-
-        List<GitHubContentResponse> result =
-                new ArrayList<>();
+        List<GitHubContentResponse> result = new ArrayList<>();
 
         for (Map<String, Object> content : contents) {
 
-            String name =
-                    (String) content.get("name");
-
-            String path =
-                    (String) content.get("path");
-
-            String type =
-                    (String) content.get("type");
+            String name = (String) content.get("name");
+            String path = (String) content.get("path");
+            String type = (String) content.get("type");
 
             result.add(
-                    new GitHubContentResponse(
-                            name,
-                            path,
-                            type
-                    )
+                    new GitHubContentResponse(name, path, type)
             );
         }
+
+        System.out.println(
+                "GitHub repository fetched: "
+                        + githubUsername + "/" + repositoryName
+                        + ", root items: " + result.size()
+        );
 
         return result;
     }
@@ -325,166 +326,194 @@ public class GitHubAccountService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        GitHubAccount githubAccount =
-                gitHubAccountRepository.findByUser(user)
-                        .orElseThrow(() -> new RuntimeException("GitHub account not found"));
+        GitHubAccount githubAccount = gitHubAccountRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("GitHub account not found"));
 
         String githubUsername = githubAccount.getGithubUsername();
         String repositoryName = githubAccount.getRepositoryName();
         String accessToken = githubAccount.getAccessToken();
 
+        if (accessToken == null || accessToken.isBlank()) {
+            throw new IllegalStateException(
+                    "GitHub access token is missing for user ID: " + userId
+            );
+        }
+
+        if (repositoryName == null
+                || repositoryName.isBlank()
+                || repositoryName.equalsIgnoreCase("Not selected")) {
+            throw new IllegalStateException(
+                    "Please select a GitHub repository before syncing."
+            );
+        }
+
+        System.out.println(">>> Starting GitHub sync");
+        System.out.println(">>> GitHub username: " + githubUsername);
+        System.out.println(">>> Selected repository: " + repositoryName);
+
+        // Fetch contents of the selected repository
         List<GitHubContentResponse> contents =
                 getSelectedRepositoryContents(userId);
 
-        List<DSAProblemResponse> solvedProblems = new ArrayList<>();
-
-        for (GitHubContentResponse content : contents) {
-
-            if (content.getType().equals("dir")
-                    && content.getName().matches("^\\d{4}-.*")) {
-
-                String folderName = content.getName();
-
-                String problemNumber = folderName.substring(0, 4);
-                String problemName = folderName.substring(5);
-
-                LeetCodeProblemResponse leetCodeProblem =
-                        getLeetCodeProblem(problemNumber);
-
-                List<String> topics = new ArrayList<>();
-
-                if (leetCodeProblem != null
-                        && leetCodeProblem.getTopicTags() != null) {
-
-                    for (LeetCodeProblemResponse.TopicTag tag :
-                            leetCodeProblem.getTopicTags()) {
-
-                        topics.add(tag.getName());
-                    }
-                }
-
-                // Find existing problem or create a new one
-                Problem problem =
-                        problemRepository
-                                .findByProblemNumber(problemNumber)
-                                .orElse(null);
-
-                if (problem == null && leetCodeProblem != null) {
-
-                    problem = new Problem(
-                            problemNumber,
-                            leetCodeProblem.getTitle(),
-                            "LeetCode",
-                            leetCodeProblem.getDifficulty(),
-                            leetCodeProblem.getUrl()
-                    );
-                }
-
-                // Save topics and connect them to the problem
-                if (problem != null) {
-
-                    problemRepository.save(problem);
-
-                    if (user.getSolvedProblems() == null) {
-                        user.setSolvedProblems(new java.util.HashSet<>());
-                    }
-
-                    user.getSolvedProblems().add(problem);
-
-                    userRepository.save(user);
-
-
-// Find existing UserProblem
-                    UserProblem userProblem =
-                            userProblemRepository
-                                    .findByUserAndProblem(user, problem)
-                                    .orElse(null);
-
-
-// Create it if it doesn't exist
-                    if (userProblem == null) {
-
-                        userProblem = new UserProblem();
-
-                        userProblem.setUser(user);
-                        userProblem.setProblem(problem);
-                    }
-
-
-// Find the actual LeetHub solution file
-                    String solutionFilePath = getSolutionFilePath(
-                            githubUsername,
-                            repositoryName,
-                            content.getPath(),
-                            accessToken
-                    );
-
-                    // Get the latest GitHub commit date for the actual solution file
-                    if (solutionFilePath != null) {
-
-                        LocalDate commitDate = getLatestCommitDate(
-                                githubUsername,
-                                repositoryName,
-                                solutionFilePath,
-                                accessToken
-                        );
-
-                        // Update solved date from GitHub
-                        if (commitDate != null) {
-                            userProblem.setSolvedDate(commitDate);
-                        }
-
-                        // Store the actual solution file path
-                        userProblem.setGithubFileUrl(solutionFilePath);
-                    }
-
-                    // Save / update UserProblem
-                    userProblemRepository.save(userProblem);
-
-                    try {
-
-                        java.util.Set<Topic> topicEntities =
-                                new java.util.HashSet<>();
-
-                        for (String topicName : topics) {
-
-                            Topic topic =
-                                    topicRepository
-                                            .findByName(topicName)
-                                            .orElseGet(() ->
-                                                    topicRepository.save(
-                                                            new Topic(topicName)
-                                                    )
-                                            );
-
-                            topicEntities.add(topic);
-                        }
-
-                        problem.setTopics(topicEntities);
-
-                        problemRepository.save(problem);
-
-                    } catch (Exception e) {
-
-                        e.printStackTrace();
-
-                        throw e;
-                    }
-                }
-
-                solvedProblems.add(
-                        new DSAProblemResponse(
-                                problemNumber,
-                                problemName,
-                                topics
-                        )
-                );
-            }
+        if (contents == null || contents.isEmpty()) {
+            throw new IllegalStateException(
+                    "The selected GitHub repository is empty or has no accessible files."
+            );
         }
 
-        githubAccount.setLastSyncedAt(LocalDateTime.now());
+        System.out.println(">>> GitHub root items fetched: " + contents.size());
 
+        List<DSAProblemResponse> solvedProblems = new ArrayList<>();
+
+        // Process supported LeetCode solution folders
+        for (GitHubContentResponse content : contents) {
+
+            if (content.getName() == null
+                    || content.getType() == null
+                    || !content.getType().equals("dir")
+                    || !content.getName().matches("^\\d{4}-.*")) {
+                continue;
+            }
+
+            String folderName = content.getName();
+
+            String problemNumber = folderName.substring(0, 4);
+            String problemName = folderName.substring(5);
+
+            System.out.println(">>> Processing problem: " + folderName);
+
+            LeetCodeProblemResponse leetCodeProblem =
+                    getLeetCodeProblem(problemNumber);
+
+            // Find existing problem in the database
+            Problem problem = problemRepository
+                    .findByProblemNumber(problemNumber)
+                    .orElse(null);
+
+            // Skip problems that cannot be identified and do not already exist
+            if (problem == null && leetCodeProblem == null) {
+                System.out.println(
+                        ">>> Skipping problem " + problemNumber
+                                + ": problem details could not be retrieved."
+                );
+                continue;
+            }
+
+            List<String> topics = new ArrayList<>();
+
+            if (leetCodeProblem != null
+                    && leetCodeProblem.getTopicTags() != null) {
+
+                for (LeetCodeProblemResponse.TopicTag tag
+                        : leetCodeProblem.getTopicTags()) {
+
+                    topics.add(tag.getName());
+                }
+            }
+
+            // Create a problem record if one does not already exist
+            if (problem == null) {
+
+                problem = new Problem(
+                        problemNumber,
+                        leetCodeProblem.getTitle(),
+                        "LeetCode",
+                        leetCodeProblem.getDifficulty(),
+                        leetCodeProblem.getUrl()
+                );
+            }
+
+            problemRepository.save(problem);
+
+            // Associate the problem with the user
+            if (user.getSolvedProblems() == null) {
+                user.setSolvedProblems(new java.util.HashSet<>());
+            }
+
+            user.getSolvedProblems().add(problem);
+            userRepository.save(user);
+
+            // Find or create the user's solved-problem record
+            UserProblem userProblem = userProblemRepository
+                    .findByUserAndProblem(user, problem)
+                    .orElse(null);
+
+            if (userProblem == null) {
+                userProblem = new UserProblem();
+                userProblem.setUser(user);
+                userProblem.setProblem(problem);
+            }
+
+            // Locate the actual solution file in the selected repository
+            String solutionFilePath = getSolutionFilePath(
+                    githubUsername,
+                    repositoryName,
+                    content.getPath(),
+                    accessToken
+            );
+
+            // Update the solved date using the latest GitHub commit date
+            if (solutionFilePath != null) {
+
+                LocalDate commitDate = getLatestCommitDate(
+                        githubUsername,
+                        repositoryName,
+                        solutionFilePath,
+                        accessToken
+                );
+
+                if (commitDate != null) {
+                    userProblem.setSolvedDate(commitDate);
+                }
+
+                userProblem.setGithubFileUrl(solutionFilePath);
+            }
+
+            userProblemRepository.save(userProblem);
+
+            // Save topic associations
+            java.util.Set<Topic> topicEntities = new java.util.HashSet<>();
+
+            for (String topicName : topics) {
+
+                Topic topic = topicRepository
+                        .findByName(topicName)
+                        .orElseGet(() ->
+                                topicRepository.save(new Topic(topicName))
+                        );
+
+                topicEntities.add(topic);
+            }
+
+            problem.setTopics(topicEntities);
+            problemRepository.save(problem);
+
+            // Add the processed problem to the sync response
+            solvedProblems.add(
+                    new DSAProblemResponse(
+                            problemNumber,
+                            problemName,
+                            topics
+                    )
+            );
+        }
+
+        // Prevent a false-success result
+        if (solvedProblems.isEmpty()) {
+            throw new IllegalStateException(
+                    "No supported LeetCode solution folders were found in repository: "
+                            + repositoryName
+                            + ". Expected folders such as 0001-Two-Sum."
+            );
+        }
+
+        // Update the sync timestamp only after problems have been processed
+        githubAccount.setLastSyncedAt(LocalDateTime.now());
         gitHubAccountRepository.save(githubAccount);
+
+        System.out.println(">>> GitHub sync completed");
+        System.out.println(">>> Repository: " + repositoryName);
+        System.out.println(">>> Problems processed: " + solvedProblems.size());
 
         return solvedProblems;
     }

@@ -23,6 +23,7 @@ import java.util.List;
 import com.vinayaka.dsa.SolvedProblemResponse;
 import com.vinayaka.dsa.entity.ProgressHistory;
 import com.vinayaka.dsa.DashboardResponse;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 public class GitHubAccountController {
@@ -127,13 +128,35 @@ public class GitHubAccountController {
     }
 
     @PostMapping("/users/{userId}/sync")
-    public String syncUserProblems(@PathVariable Long userId) {
+    public ResponseEntity<String> syncUserProblems(@PathVariable Long userId) {
 
-        gitHubAccountService.getSolvedProblemsFromGitHub(userId);
+        System.out.println(">>> SYNC ENDPOINT CALLED for user: " + userId);
 
-        gitHubAccountService.saveProgressHistory(userId);
+        try {
+            List<DSAProblemResponse> solvedProblems =
+                    gitHubAccountService.getSolvedProblemsFromGitHub(userId);
 
-        return "Problems synced successfully";
+            if (solvedProblems == null || solvedProblems.isEmpty()) {
+                return ResponseEntity.badRequest()
+                        .body("Sync failed: No supported LeetCode problems were found.");
+            }
+
+            gitHubAccountService.saveProgressHistory(userId);
+
+            String message = "Problems synced successfully. Problems processed: "
+                    + solvedProblems.size();
+
+            System.out.println(">>> " + message);
+
+            return ResponseEntity.ok(message);
+
+        } catch (Exception e) {
+
+            System.err.println(">>> GitHub sync failed: " + e.getMessage());
+
+            return ResponseEntity.badRequest()
+                    .body("GitHub sync failed: " + e.getMessage());
+        }
     }
 
     @GetMapping("/users/{userId}/difficulty-progress-db")
