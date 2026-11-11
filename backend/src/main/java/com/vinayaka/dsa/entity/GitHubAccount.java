@@ -55,6 +55,9 @@ public class GitHubAccount {
     @Column(nullable = false)
     private String accessToken;
 
+    @Column(name = "github_email")
+    private String githubEmail;
+
 
     @Column(nullable = false)
     private String repositoryName;
@@ -68,6 +71,14 @@ public class GitHubAccount {
         this.repositoryName = repositoryName;
         this.accessToken = accessToken;
         this.user = user;
+    }
+
+    public String getGithubEmail() {
+        return githubEmail;
+    }
+
+    public void setGithubEmail(String githubEmail) {
+        this.githubEmail = githubEmail;
     }
 
     @JsonIgnore

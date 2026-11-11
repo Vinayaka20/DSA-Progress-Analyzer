@@ -76,6 +76,10 @@ public class UserService {
         response.setName(user.getName());
         response.setEmail(user.getEmail());
 
+        response.setGithubEmail(
+                account != null ? account.getGithubEmail() : null
+        );
+
         if (account != null) {
             response.setConnected(true);
             response.setGithubUsername(account.getGithubUsername());

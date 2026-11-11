@@ -1,15 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Progress - DSA Progress Analyzer</title>
 
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/progress.css">
 </head>
 
-<body>
+<body class="progress-page">
 
 <div class="app">
 
@@ -18,7 +21,6 @@
 
         <div class="brand">
             <div class="brand-icon">◆</div>
-
             <div>
                 <h2>DSA Progress</h2>
                 <span>Analyzer</span>
@@ -28,54 +30,41 @@
         <nav class="sidebar-nav">
 
             <a href="/dashboard" class="nav-item">
-                <span>▣</span>
-                <span>Dashboard</span>
+                <span>▣</span><span>Dashboard</span>
             </a>
 
             <a href="#" class="nav-item">
-                <span>✦</span>
-                <span>AI Coach</span>
+                <span>✦</span><span>AI Coach</span>
             </a>
 
             <a href="/problems-page" class="nav-item">
-                <span>☷</span>
-                <span>Problems</span>
+                <span>☷</span><span>Problems</span>
             </a>
 
             <a href="/analytics" class="nav-item">
-                <span>▥</span>
-                <span>Analytics</span>
+                <span>▥</span><span>Analytics</span>
             </a>
 
             <a href="/progress" class="nav-item active">
-                <span>↗</span>
-                <span>Progress</span>
+                <span>↗</span><span>Progress</span>
             </a>
 
-<!--            <a href="/github" class="nav-item">-->
-<!--                <span>◈</span>-->
-<!--                <span>GitHub</span>-->
-<!--            </a>-->
-
             <a href="/settings" class="nav-item">
-                <span>⚙</span>
-                <span>Settings</span>
+                <span>⚙</span><span>Settings</span>
             </a>
 
         </nav>
 
         <div class="sidebar-user">
-
             <div class="avatar">V</div>
-
             <div>
                 <strong>Vinayaka</strong>
                 <small>DSA Student</small>
             </div>
-
         </div>
 
     </aside>
+
 
     <!-- Main -->
     <main class="main">
@@ -85,171 +74,258 @@
 
             <div class="search-box">
                 <span>⌕</span>
-
-                <input
-                        type="text"
-                        placeholder="Search..."
-                >
+                <input type="text" placeholder="Search...">
             </div>
 
             <div class="top-user">
-
                 <div class="notification">
                     ♧
                     <span>1</span>
                 </div>
 
                 <strong>Vinayaka</strong>
-
                 <div class="avatar small">V</div>
-
             </div>
 
         </header>
 
-        <!-- Progress Content -->
-        <section class="dashboard">
 
-            <div class="page-heading">
+        <!-- Progress content -->
+        <section class="dashboard progress-dashboard">
+
+            <!-- Heading -->
+            <div class="progress-heading">
 
                 <div>
+                    <span class="section-eyebrow">YOUR LEARNING JOURNEY</span>
 
-                    <h1>Progress</h1>
+                    <h1>Progress Overview</h1>
 
                     <p>
-                        Track your goals and learning journey.
+                        Every problem you solve brings you one step closer
+                        to mastering DSA.
                     </p>
+                </div>
 
+                <div class="heading-decoration">
+                    <span>✦</span>
+                    <div>
+                        <strong>Stay consistent.</strong>
+                        <small>Small steps. Big progress.</small>
+                    </div>
                 </div>
 
             </div>
 
-            <!-- Summary Cards -->
-            <div class="stats-grid">
 
-                <div class="stat-card solved">
+            <!-- Statistics -->
+            <div class="progress-section-heading">
+                <div>
+                    <h2>Your Statistics</h2>
+                    <p>A snapshot of your problem-solving journey</p>
+                </div>
+            </div>
 
-                    <div class="stat-icon">★</div>
+            <div class="progress-stats-grid">
 
-                    <div class="stat-number" id="totalSolved">
+                <div class="progress-stat-card total-card">
+
+                    <div class="stat-top">
+                        <div class="progress-stat-icon">⌘</div>
+                        <span class="stat-tag">ALL TIME</span>
+                    </div>
+
+                    <div class="progress-stat-number" id="totalSolved">
                         0
                     </div>
 
-                    <div class="stat-label">
-                        Total Solved
+                    <div class="progress-stat-label">
+                        Total Problems Solved
+                    </div>
+
+                    <div class="stat-bottom">
+                        Keep building your skills
                     </div>
 
                 </div>
 
-                <div class="stat-card">
 
-                    <div class="stat-icon">↗</div>
+                <div class="progress-stat-card current-card">
 
-                    <div class="stat-number" id="currentStreak">
+                    <div class="stat-top">
+                        <div class="progress-stat-icon">🔥</div>
+                        <span class="stat-tag">ACTIVE</span>
+                    </div>
+
+                    <div class="progress-stat-number" id="currentStreak">
                         0
                     </div>
 
-                    <div class="stat-label">
+                    <div class="progress-stat-label">
                         Current Streak
                     </div>
 
+                    <div class="stat-bottom">
+                        Consecutive solving days
+                    </div>
+
                 </div>
 
-                <div class="stat-card">
 
-                    <div class="stat-icon">🏆</div>
+                <div class="progress-stat-card longest-card">
 
-                    <div class="stat-number" id="longestStreak">
+                    <div class="stat-top">
+                        <div class="progress-stat-icon">🏆</div>
+                        <span class="stat-tag">PERSONAL BEST</span>
+                    </div>
+
+                    <div class="progress-stat-number" id="longestStreak">
                         0
                     </div>
 
-                    <div class="stat-label">
+                    <div class="progress-stat-label">
                         Longest Streak
                     </div>
 
-                </div>
-
-            </div>
-
-            <!-- Weekly Goal -->
-            <div class="panel">
-
-                <div class="panel-header">
-
-                    <h2>Weekly Goal</h2>
-
-                    <button id="editGoalsBtn" class="export-btn">
-                        Edit Goals
-                    </button>
-
-                </div>
-
-                <h3 id="weeklyGoalText">
-                    0 / 0
-                </h3>
-
-                <div class="progress-bar">
-
-                    <div
-                            id="weeklyBar"
-                            class="progress-fill">
-                    </div>
-
-                </div>
-                <p id="weeklyResult" class="goal-result"></p>
-
-            </div>
-
-            <!-- Monthly Goal -->
-            <div class="panel">
-
-                <div class="panel-header">
-
-                    <h2>30-Day Goal</h2>
-
-                </div>
-
-                <h3 id="monthlyGoalText">
-                    0 / 0
-                </h3>
-
-                <div class="progress-bar">
-
-                    <div
-                            id="monthlyBar"
-                            class="progress-fill">
-                    </div>
-
-                </div>
-                <p id="monthlyResult" class="goal-result"></p>
-
-            </div>
-
-            <!-- Target Goal -->
-            <div class="panel">
-
-                <div class="panel-header">
-
-                    <h2>Target Goal</h2>
-
-                </div>
-
-                <h3 id="targetGoalText">
-                    0 / 0
-                </h3>
-
-                <div class="progress-bar">
-
-                    <div
-                            id="targetBar"
-                            class="progress-fill">
+                    <div class="stat-bottom">
+                        Your best consistency record
                     </div>
 
                 </div>
 
-                <p id="remainingText">
-                    Remaining: 0
-                </p>
+            </div>
+
+
+            <!-- Goals heading -->
+            <div class="progress-section-heading goals-heading">
+
+                <div>
+                    <h2>Your Goals</h2>
+                    <p>Track your daily learning commitment</p>
+                </div>
+
+                <button id="editGoalsBtn" class="edit-goals-btn">
+                    ✎ Edit Goals
+                </button>
+
+            </div>
+
+
+            <!-- Weekly and monthly goals -->
+            <div class="goal-grid">
+
+                <!-- Weekly -->
+                <div class="goal-card weekly-card">
+
+                    <div class="goal-card-header">
+
+                        <div class="goal-icon weekly-icon">📅</div>
+
+                        <div>
+                            <h3>Weekly Goal</h3>
+                            <p>Your weekly solving target</p>
+                        </div>
+
+                    </div>
+
+                    <div class="goal-progress-info">
+
+                        <strong id="weeklyGoalText">0 / 0</strong>
+
+                        <span>Problems solved</span>
+
+                    </div>
+
+                    <div class="progress-bar">
+                        <div id="weeklyBar" class="progress-fill"></div>
+                    </div>
+
+                    <p id="weeklyResult" class="goal-result"></p>
+
+                    <div class="goal-footer">
+                        <span>WEEKLY TARGET</span>
+                        <span>Keep going →</span>
+                    </div>
+
+                </div>
+
+
+                <!-- Monthly -->
+                <div class="goal-card monthly-card">
+
+                    <div class="goal-card-header">
+
+                        <div class="goal-icon monthly-icon">🎯</div>
+
+                        <div>
+                            <h3>30-Day Goal</h3>
+                            <p>Your monthly solving target</p>
+                        </div>
+
+                    </div>
+
+                    <div class="goal-progress-info">
+
+                        <strong id="monthlyGoalText">0 / 0</strong>
+
+                        <span>Problems solved</span>
+
+                    </div>
+
+                    <div class="progress-bar">
+                        <div id="monthlyBar" class="progress-fill"></div>
+                    </div>
+
+                    <p id="monthlyResult" class="goal-result"></p>
+
+                    <div class="goal-footer">
+                        <span>30-DAY TARGET</span>
+                        <span>Stay focused →</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Overall target -->
+            <div class="target-card">
+
+                <div class="target-main">
+
+                    <div class="target-heading">
+
+                        <div class="goal-icon target-icon">🚀</div>
+
+                        <div>
+                            <span class="section-eyebrow">LONG-TERM MILESTONE</span>
+                            <h2>Overall Target</h2>
+                            <p>Keep moving towards your DSA goal.</p>
+                        </div>
+
+                    </div>
+
+                    <div class="target-progress-info">
+                        <strong id="targetGoalText">0 / 0</strong>
+                        <span id="remainingText">Remaining: 0</span>
+                    </div>
+
+                    <div class="progress-bar target-progress-bar">
+                        <div id="targetBar" class="progress-fill"></div>
+                    </div>
+
+                    <div class="target-footer">
+                        <span>Every solved problem counts.</span>
+                        <span>One step at a time ✨</span>
+                    </div>
+
+                </div>
+
+                <div class="target-decoration">
+                    <div class="target-decoration-inner">
+                        <span>✦</span>
+                    </div>
+                </div>
 
             </div>
 
@@ -259,8 +335,7 @@
 
 </div>
 
-<script src="/js/progress.js?v=2"></script>
+<script src="/js/progress.js?v=3"></script>
 
 </body>
-
 </html>

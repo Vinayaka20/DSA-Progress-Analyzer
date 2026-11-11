@@ -5,6 +5,7 @@ public class SettingsResponse {
 
     private String name;
     private String email;
+    private String githubEmail;
     private String githubUsername;
     private String repositoryName;
     private boolean connected;
@@ -28,6 +29,14 @@ public class SettingsResponse {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getGithubEmail() {
+        return githubEmail;
+    }
+
+    public void setGithubEmail(String githubEmail) {
+        this.githubEmail = githubEmail;
     }
 
     public String getGithubUsername() {
@@ -77,4 +86,6 @@ public class SettingsResponse {
     public void setTargetGoal(int targetGoal) {
         this.targetGoal = targetGoal;
     }
+
+
 }

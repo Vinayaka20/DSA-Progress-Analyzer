@@ -1,0 +1,987 @@
+
+/* ==========================================
+   SETTINGS PAGE
+   Modern purple dashboard theme
+========================================== */
+
+body.settings-page {
+    --purple: #7138e8;
+    --purple-dark: #5426bd;
+    --purple-light: #f0eaff;
+    --ink: #211a36;
+    --muted: #817b91;
+    --border: #eeeaf5;
+
+    background: #f7f6fb;
+    color: var(--ink);
+}
+
+body.settings-page .main {
+    min-width: 0;
+}
+
+body.settings-page .topbar {
+    height: 76px;
+    padding: 0 38px;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(42, 25, 85, .035);
+}
+
+body.settings-page .search-box {
+    width: min(360px, 45vw);
+    height: 42px;
+    border-color: var(--border);
+    border-radius: 12px;
+    background: #fbfaff;
+}
+
+body.settings-page .dashboard {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 34px 38px 55px;
+}
+
+
+/* ==========================================
+   PAGE HEADING
+========================================== */
+
+.settings-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.settings-heading h1 {
+    color: var(--ink);
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -.8px;
+    margin-bottom: 8px;
+}
+
+.settings-heading p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.section-eyebrow {
+    display: block;
+    color: var(--purple);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    margin-bottom: 9px;
+}
+
+.settings-heading-decoration {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px 19px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(48, 28, 90, .035);
+}
+
+.settings-heading-decoration > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--purple-light);
+    color: var(--purple);
+    font-size: 21px;
+}
+
+.settings-heading-decoration strong,
+.settings-heading-decoration small {
+    display: block;
+}
+
+.settings-heading-decoration strong {
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.settings-heading-decoration small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+
+/* ==========================================
+   SETTINGS CARDS
+========================================== */
+
+.settings-card {
+    min-width: 0;
+    margin-bottom: 22px;
+    padding: 25px 27px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(48, 28, 90, .035);
+    transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.settings-card:hover {
+    box-shadow: 0 11px 28px rgba(48, 28, 90, .07);
+}
+
+.settings-card-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 25px;
+}
+
+.settings-heading-icon {
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    font-size: 20px;
+}
+
+.profile-heading-icon {
+    background: #eee8ff;
+    color: #7040d8;
+}
+
+.github-heading-icon {
+    background: #eae7f2;
+    color: #28213b;
+}
+
+.goals-heading-icon {
+    background: #fff2df;
+}
+
+.settings-card-heading h2 {
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 750;
+    margin-bottom: 5px;
+}
+
+.settings-card-heading p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   PROFILE SECTION
+========================================== */
+
+.profile-layout {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr);
+    gap: 30px;
+    align-items: start;
+}
+
+.profile-photo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 11px;
+    padding: 8px 10px;
+}
+
+.profile-photo-frame {
+    width: 125px;
+    height: 125px;
+    padding: 5px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #b99bff, #7138e8);
+    box-shadow: 0 7px 20px rgba(92, 57, 190, .16);
+}
+
+.profile-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    background: #f4f0ff;
+    border: 3px solid white;
+}
+
+.profile-photo-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 15px;
+    border: 1px solid #d9ccff;
+    border-radius: 9px;
+    color: var(--purple-dark);
+    background: var(--purple-light);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.profile-photo-button:hover {
+    color: white;
+    background: var(--purple);
+    border-color: var(--purple);
+}
+
+.profile-photo-section small {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+
+/* Profile form */
+
+.profile-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px 19px;
+    min-width: 0;
+}
+
+.profile-fields .form-group,
+.goals-grid .form-group {
+    min-width: 0;
+    margin: 0;
+}
+
+.settings-page .form-group label {
+    display: block;
+    color: #51496a;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.settings-page .form-group input,
+.settings-page .github-repository-group select {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    box-sizing: border-box;
+    padding: 11px 13px;
+    border: 1px solid #e3deee;
+    border-radius: 10px;
+    background: #fcfbff;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.settings-page .form-group input:focus,
+.settings-page .github-repository-group select:focus {
+    border-color: #9b82f4;
+    box-shadow: 0 0 0 3px rgba(112, 71, 235, .12);
+}
+
+.settings-page .form-group input[readonly] {
+    background: #f5f3fa;
+    color: #817a91;
+    cursor: not-allowed;
+}
+
+.settings-page .form-group small {
+    display: block;
+    margin-top: 6px;
+    color: #918aa1;
+    font-size: 10px;
+}
+
+#linkedinProfileLink {
+    display: inline-block;
+    margin-top: 7px;
+    color: var(--purple);
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+#linkedinProfileLink:hover {
+    text-decoration: underline;
+}
+
+.profile-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 3px;
+}
+
+#saveProfileBtn,
+#cancelProfileBtn {
+    min-height: 40px;
+    padding: 10px 18px;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+#saveProfileBtn {
+    border: 1px solid var(--purple);
+    background: var(--purple);
+    color: white;
+}
+
+#saveProfileBtn:hover {
+    background: var(--purple-dark);
+    border-color: var(--purple-dark);
+    transform: translateY(-1px);
+}
+
+#cancelProfileBtn {
+    border: 1px solid var(--border);
+    background: white;
+    color: #625b75;
+}
+
+#cancelProfileBtn:hover {
+    background: #f7f4ff;
+}
+
+#profileMessage {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 12px;
+}
+
+
+/* ==========================================
+   GITHUB INTEGRATION
+========================================== */
+
+.github-card-heading {
+    align-items: center;
+}
+
+.github-title-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.github-status-badge {
+    flex-shrink: 0;
+    padding: 8px 13px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .3px;
+    white-space: nowrap;
+}
+
+.github-status-badge.connected {
+    border-color: #ccebd9;
+    background: #effaf3;
+    color: #18804b;
+}
+
+.github-status-badge.disconnected {
+    border-color: #f4d2d2;
+    background: #fff3f3;
+    color: #b83232;
+}
+
+.github-status-badge.checking {
+    border-color: #e5ddf5;
+    background: #f4f0fc;
+    color: #776a92;
+}
+
+
+/* Account row */
+
+.github-account-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 17px;
+    margin-bottom: 22px;
+    border: 1px solid #e8e1fa;
+    border-radius: 14px;
+    background: linear-gradient(110deg, #f8f5ff, #fcfbff);
+}
+
+.github-account-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 47px;
+    height: 47px;
+    flex-shrink: 0;
+    border-radius: 13px;
+    background: #21183f;
+    color: white;
+    font-size: 22px;
+    box-shadow: 0 5px 14px rgba(33, 24, 63, .16);
+}
+
+.github-account-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.github-label {
+    display: block;
+    color: var(--muted);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.github-account-info strong {
+    color: var(--ink);
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+
+/* GitHub buttons */
+
+.github-outline-btn,
+.github-secondary-btn,
+.github-primary-btn,
+.github-danger-btn {
+    min-height: 39px;
+    padding: 10px 15px;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.github-outline-btn,
+.github-secondary-btn {
+    border: 1px solid #d8ccff;
+    background: white;
+    color: var(--purple-dark);
+}
+
+.github-outline-btn:hover,
+.github-secondary-btn:hover {
+    background: #f4f0ff;
+    border-color: var(--purple);
+}
+
+.github-primary-btn {
+    border: 1px solid var(--purple);
+    background: var(--purple);
+    color: white;
+}
+
+.github-primary-btn:hover {
+    background: var(--purple-dark);
+    border-color: var(--purple-dark);
+}
+
+.github-primary-btn:disabled,
+.github-secondary-btn:disabled,
+.github-outline-btn:disabled,
+.github-danger-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.github-primary-btn.loading,
+.github-secondary-btn.loading {
+    opacity: .65;
+    pointer-events: none;
+}
+
+.github-primary-btn.synced {
+    background: #e8e8ee;
+    color: #666;
+    border-color: #e8e8ee;
+    cursor: not-allowed;
+    opacity: .8;
+}
+
+
+/* Repository */
+
+.github-repository-group {
+    margin-bottom: 19px;
+}
+
+.github-repository-group select {
+    cursor: pointer;
+}
+
+.github-repository-group select:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+}
+
+.field-hint {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+
+/* Connection message */
+
+.github-connection-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    margin-bottom: 19px;
+    border: 1px solid #dcefe3;
+    border-radius: 12px;
+    background: #f4fbf6;
+}
+
+.connection-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #dff5e6;
+    color: #16804b;
+    font-weight: 800;
+}
+
+.github-connection-info strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #24543a;
+    font-size: 12px;
+}
+
+.github-connection-info p {
+    margin: 0;
+    color: #6f8276;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* Actions */
+
+.github-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+
+/* Last sync */
+
+.github-last-sync {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    margin-bottom: 18px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.github-last-sync span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.github-last-sync strong {
+    color: var(--ink);
+    font-size: 12px;
+    text-align: right;
+}
+
+
+/* GitHub statistics */
+
+.github-sync-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.github-stat {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+    padding: 17px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: #faf9fe;
+}
+
+.github-stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 11px;
+    background: #eee8ff;
+    color: var(--purple);
+    font-size: 16px;
+}
+
+.github-stat strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--purple-dark);
+    font-size: 24px;
+    line-height: 1;
+}
+
+.github-stat span {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+
+/* Disconnect area */
+
+.github-danger-zone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    padding-top: 19px;
+    border-top: 1px solid var(--border);
+}
+
+.github-danger-zone strong {
+    display: block;
+    color: #c43c45;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.github-danger-zone p {
+    max-width: 550px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.github-danger-btn {
+    flex-shrink: 0;
+    border: 1px solid #f0caca;
+    background: white;
+    color: #c43c45;
+}
+
+.github-danger-btn:hover {
+    background: #fff2f2;
+    border-color: #d76a70;
+}
+
+.github-message {
+    margin-top: 14px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.github-message:empty {
+    display: none;
+}
+
+.github-message.success {
+    color: #16804b;
+}
+
+.github-message.error {
+    color: #c62828;
+}
+
+.github-message.info {
+    color: var(--purple-dark);
+}
+
+
+/* ==========================================
+   GOAL SETTINGS
+========================================== */
+
+.goals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.goal-input-card {
+    padding: 17px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: #fbfaff;
+}
+
+.goal-input-card label {
+    font-size: 12px;
+}
+
+.goal-input-card input {
+    font-size: 15px !important;
+    font-weight: 700;
+}
+
+.goal-input-card small {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+
+/* ==========================================
+   SAVE SETTINGS
+========================================== */
+
+.settings-save-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 22px 25px;
+    margin-top: 3px;
+    border: 1px solid #e5dafb;
+    border-radius: 16px;
+    background: linear-gradient(110deg, #f0eaff, #ffffff);
+}
+
+.settings-save-card strong {
+    display: block;
+    color: var(--ink);
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.settings-save-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.settings-save-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+#saveMessage {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+body.settings-page #saveSettingsBtn {
+    min-height: 42px;
+    padding: 11px 19px;
+    border: 1px solid var(--purple);
+    border-radius: 10px;
+    background: var(--purple);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+body.settings-page #saveSettingsBtn:hover {
+    background: var(--purple-dark);
+    border-color: var(--purple-dark);
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================
+   ACCESSIBILITY
+========================================== */
+
+body.settings-page button:focus-visible,
+body.settings-page a:focus-visible,
+body.settings-page input:focus-visible,
+body.settings-page select:focus-visible {
+    outline: 3px solid rgba(112, 71, 235, .25);
+    outline-offset: 2px;
+}
+
+
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media (max-width: 1000px) {
+
+    body.settings-page .dashboard {
+        padding: 28px 24px 42px;
+    }
+
+    .profile-layout {
+        grid-template-columns: 135px minmax(0, 1fr);
+        gap: 19px;
+    }
+
+    .profile-photo-frame {
+        width: 112px;
+        height: 112px;
+    }
+
+    .goals-grid {
+        gap: 11px;
+    }
+}
+
+
+@media (max-width: 750px) {
+
+    .settings-heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .settings-heading-decoration {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .profile-layout {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .profile-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-actions {
+        grid-column: 1;
+    }
+
+    #profileMessage {
+        grid-column: 1;
+    }
+
+    .goals-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .github-card-heading {
+        flex-wrap: wrap;
+    }
+
+    .github-title-content {
+        flex-basis: calc(100% - 65px);
+    }
+
+    .github-status-badge {
+        margin-left: 58px;
+    }
+
+    .github-actions {
+        flex-direction: column;
+    }
+
+    .github-actions button {
+        width: 100%;
+    }
+
+    .settings-save-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .settings-save-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    body.settings-page .topbar {
+        padding: 0 18px;
+    }
+
+    body.settings-page .dashboard {
+        padding: 23px 16px 36px;
+    }
+
+    .settings-card {
+        padding: 21px 18px;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    .settings-heading h1 {
+        font-size: 25px;
+    }
+
+    .github-account-row {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .github-outline-btn {
+        width: 100%;
+    }
+
+    .github-sync-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .github-danger-zone {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .github-danger-btn {
+        width: 100%;
+    }
+
+    .github-last-sync {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .settings-save-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    #saveSettingsBtn {
+        width: 100%;
+    }
+
+    .profile-actions button {
+        flex: 1;
+    }
+}

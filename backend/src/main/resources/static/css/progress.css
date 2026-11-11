@@ -1,0 +1,563 @@
+
+/* ==========================================
+   PROGRESS PAGE - MODERN PURPLE DASHBOARD
+   Scoped to progress page only
+========================================== */
+
+body.progress-page {
+    --purple: #7138e8;
+    --purple-dark: #5426bd;
+    --purple-light: #f0eaff;
+    --ink: #211a36;
+    --muted: #817b91;
+    --border: #eeeaf5;
+
+    background: #f7f6fb;
+    color: var(--ink);
+}
+
+/* Main content */
+
+body.progress-page .dashboard {
+    padding: 34px 38px 50px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+body.progress-page .topbar {
+    height: 76px;
+    padding: 0 38px;
+}
+
+
+/* ==========================================
+   PAGE HEADING
+========================================== */
+
+.progress-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 34px;
+}
+
+.section-eyebrow {
+    display: block;
+    color: var(--purple);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    margin-bottom: 9px;
+}
+
+.progress-heading h1 {
+    font-size: 30px;
+    font-weight: 750;
+    letter-spacing: -0.8px;
+    margin-bottom: 8px;
+}
+
+.progress-heading p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.heading-decoration {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 15px 20px;
+    box-shadow: 0 5px 20px rgba(48, 28, 90, 0.035);
+}
+
+.heading-decoration > span {
+    display: flex;
+    width: 39px;
+    height: 39px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--purple-light);
+    color: var(--purple);
+    font-size: 20px;
+}
+
+.heading-decoration strong,
+.heading-decoration small {
+    display: block;
+}
+
+.heading-decoration strong {
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.heading-decoration small {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+
+/* ==========================================
+   SECTION HEADINGS
+========================================== */
+
+.progress-section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 17px;
+}
+
+.progress-section-heading h2 {
+    font-size: 18px;
+    font-weight: 750;
+    margin-bottom: 5px;
+}
+
+.progress-section-heading p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.goals-heading {
+    margin-top: 34px;
+}
+
+
+/* ==========================================
+   STATISTICS CARDS
+========================================== */
+
+.progress-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.progress-stat-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 174px;
+    padding: 23px;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background: white;
+    box-shadow: 0 5px 20px rgba(48, 28, 90, 0.035);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.progress-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(48, 28, 90, 0.09);
+}
+
+.total-card {
+    background: linear-gradient(135deg, #f0e8ff, #ffffff);
+    border-color: #e6d9ff;
+}
+
+.current-card {
+    background: linear-gradient(135deg, #fff4e9, #ffffff);
+    border-color: #f5e5d3;
+}
+
+.longest-card {
+    background: linear-gradient(135deg, #e9f5ff, #ffffff);
+    border-color: #dceafa;
+}
+
+.stat-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 17px;
+}
+
+.progress-stat-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,.85);
+    border-radius: 12px;
+    font-size: 20px;
+}
+
+.stat-tag {
+    color: var(--muted);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.progress-stat-number {
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--ink);
+}
+
+.progress-stat-label {
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 7px;
+}
+
+.stat-bottom {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 9px;
+}
+
+
+/* ==========================================
+   EDIT GOALS BUTTON
+========================================== */
+
+.edit-goals-btn {
+    border: 1px solid #d9ccfa;
+    color: var(--purple);
+    background: white;
+    border-radius: 9px;
+    padding: 10px 15px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.edit-goals-btn:hover {
+    color: white;
+    background: var(--purple);
+    border-color: var(--purple);
+}
+
+
+/* ==========================================
+   WEEKLY AND MONTHLY GOALS
+========================================== */
+
+.goal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.goal-card {
+    min-width: 0;
+    min-height: 205px;
+    padding: 23px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    box-shadow: 0 5px 20px rgba(48, 28, 90, 0.035);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.goal-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(48, 28, 90, 0.07);
+}
+
+.goal-card-header {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 25px;
+}
+
+.goal-icon {
+    width: 43px;
+    height: 43px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 19px;
+}
+
+.weekly-icon {
+    background: #eee8ff;
+}
+
+.monthly-icon {
+    background: #e6f5ff;
+}
+
+.target-icon {
+    background: #e9e3ff;
+}
+
+.goal-card-header h3 {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.goal-card-header p {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.goal-progress-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 11px;
+}
+
+.goal-progress-info strong {
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.goal-progress-info span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+
+/* Progress bars */
+
+body.progress-page .progress-bar {
+    height: 9px;
+    width: 100%;
+    background: #eeeaf4;
+    border-radius: 50px;
+    overflow: hidden;
+    margin-top: 0;
+}
+
+body.progress-page .progress-fill {
+    width: 0%;
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient(90deg, #9565ff, #632bd2);
+    transition: width .7s cubic-bezier(.2,.8,.2,1);
+}
+
+.goal-result {
+    min-height: 17px;
+    margin-top: 11px;
+    color: #6d52a6;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.goal-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    border-top: 1px solid #f0edf5;
+    padding-top: 13px;
+    margin-top: 9px;
+}
+
+.goal-footer span {
+    color: var(--muted);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .7px;
+}
+
+.goal-footer span:last-child {
+    color: var(--purple);
+}
+
+
+/* ==========================================
+   OVERALL TARGET CARD
+========================================== */
+
+.target-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    margin-top: 21px;
+    padding: 27px 30px;
+    min-height: 205px;
+    background: linear-gradient(115deg, #ffffff 45%, #f1eaff 100%);
+    border: 1px solid #e7def8;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(48, 28, 90, 0.035);
+}
+
+.target-main {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-width: 0;
+}
+
+.target-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 24px;
+}
+
+.target-heading h2 {
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.target-heading p {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.target-heading .section-eyebrow {
+    font-size: 9px;
+    margin-bottom: 5px;
+}
+
+.target-progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 11px;
+}
+
+.target-progress-info strong {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.target-progress-info span {
+    color: var(--purple);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.target-progress-bar {
+    max-width: 850px;
+}
+
+.target-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 13px;
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.target-decoration {
+    width: 130px;
+    height: 130px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(113, 56, 232, .08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.target-decoration-inner {
+    width: 88px;
+    height: 88px;
+    border: 1px dashed rgba(113, 56, 232, .4);
+    border-radius: 50%;
+    background: rgba(255,255,255,.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--purple);
+    font-size: 34px;
+}
+
+
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media (max-width: 1000px) {
+
+    body.progress-page .dashboard {
+        padding: 28px 24px 40px;
+    }
+
+    .progress-stats-grid {
+        gap: 13px;
+    }
+
+    .progress-stat-card {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 750px) {
+
+    .progress-heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .heading-decoration {
+        width: 100%;
+    }
+
+    .progress-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .goal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .target-decoration {
+        display: none;
+    }
+
+    .target-card {
+        padding: 22px;
+    }
+
+    body.progress-page .topbar {
+        padding: 0 18px;
+    }
+
+    body.progress-page .dashboard {
+        padding: 24px 17px 35px;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .progress-heading h1 {
+        font-size: 25px;
+    }
+
+    .progress-section-heading h2 {
+        font-size: 16px;
+    }
+
+    .target-progress-info {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .target-footer {
+        flex-direction: column;
+    }
+
+    .goal-footer {
+        flex-direction: column;
+    }
+
+    .edit-goals-btn {
+        padding: 9px 11px;
+    }
+}

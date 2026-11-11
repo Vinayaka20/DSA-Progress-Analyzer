@@ -53,7 +53,7 @@ public class GitHubAuthController {
 
         String githubUrl = "https://github.com/login/oauth/authorize"
                 + "?client_id=" + clientId
-                + "&scope=read:user repo"
+                + "&scope=read%3Auser%20user%3Aemail%20repo"
                 + "&state=" + userId;
 
         return new RedirectView(githubUrl);
@@ -139,6 +139,35 @@ public class GitHubAuthController {
         String githubUsername =
                 (String) githubUser.get("login");
 
+        // Retrieve the authenticated user's GitHub email addresses
+        String emailUrl = "https://api.github.com/user/emails";
+
+        ResponseEntity<List> emailResponse = restTemplate.exchange(
+                emailUrl,
+                HttpMethod.GET,
+                userRequest,
+                List.class
+        );
+
+        List<Map<String, Object>> emails = emailResponse.getBody();
+
+        String githubEmail = null;
+
+        if (emails != null) {
+            for (Map<String, Object> email : emails) {
+                if (Boolean.TRUE.equals(email.get("primary"))
+                        && Boolean.TRUE.equals(email.get("verified"))) {
+
+                    githubEmail = (String) email.get("email");
+                    break;
+                }
+            }
+        }
+
+        System.out.println("GitHub email retrieved: "
+                + (githubEmail != null ? "Available" : "Not available"));
+        System.out.println("GitHub email value: " + githubEmail);
+
         // Find existing GitHub account
         GitHubAccount githubAccount =
                 gitHubAccountRepository
@@ -154,18 +183,13 @@ public class GitHubAuthController {
                     accessToken,
                     user
             );
+            githubAccount.setGithubEmail(githubEmail);
 
         } else {
-
-            // Update existing account
-            githubAccount.setGithubUsername(
-                    githubUsername
-            );
-
-            githubAccount.setAccessToken(
-                    accessToken
-            );
-        }
+        githubAccount.setGithubUsername(githubUsername);
+        githubAccount.setAccessToken(accessToken);
+        githubAccount.setGithubEmail(githubEmail);
+    }
 
         gitHubAccountRepository.save(githubAccount);
 

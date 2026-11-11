@@ -101,8 +101,11 @@ async function loadSettings() {
             );
         }
 
-        const data =
-            await response.json();
+
+
+            const data = await response.json();
+
+            console.log("Settings API response:", data);
 
 
         // ----------------------------------------------------
@@ -120,11 +123,10 @@ async function loadSettings() {
                 data.name || "";
         }
 
-        document.getElementById(
-            "userEmail"
-        ).value =
-            data.email || "";
-
+document.getElementById(
+    "userEmail"
+).value =
+    data.githubEmail || data.email || "";
 
         // ----------------------------------------------------
         // GOALS

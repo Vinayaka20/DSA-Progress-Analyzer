@@ -12,18 +12,9 @@ import java.util.Optional;
 public interface UserProblemRepository
         extends JpaRepository<UserProblem, Long> {
 
-    // Existing method used by UserProblemService
     List<UserProblem> findByUser(User user);
 
-    // Used to check whether a user already has a problem
-    boolean existsByUserAndProblem(
-            User user,
-            Problem problem
-    );
+    boolean existsByUserAndProblem(User user, Problem problem);
 
-    // Used by GitHub Sync to find and update an existing record
-    Optional<UserProblem> findByUserAndProblem(
-            User user,
-            Problem problem
-    );
+    Optional<UserProblem> findByUserAndProblem(User user, Problem problem);
 }

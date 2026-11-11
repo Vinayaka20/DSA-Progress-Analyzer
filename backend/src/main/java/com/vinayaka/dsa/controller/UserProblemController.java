@@ -1,3 +1,4 @@
+
 package com.vinayaka.dsa.controller;
 
 import com.vinayaka.dsa.entity.UserProblem;
@@ -33,9 +34,7 @@ public class UserProblemController {
     }
 
     @GetMapping("/users/{userId}/problems")
-    public List<UserProblem> getProblemsByUserId(
-            @PathVariable Long userId) {
-
+    public List<UserProblem> getProblemsByUserId(@PathVariable Long userId) {
         return userProblemService.getProblemsByUserId(userId);
     }
 
@@ -45,23 +44,17 @@ public class UserProblemController {
     }
 
     @GetMapping("/users/{userId}/topic-progress")
-    public Map<String, Long> getTopicProgress(
-            @PathVariable Long userId) {
-
+    public Map<String, Long> getTopicProgress(@PathVariable Long userId) {
         return userProblemService.getTopicProgress(userId);
     }
 
     @GetMapping("/users/{userId}/solved-problems")
-    public List<Problem> getSolvedProblemsByUserId(
-            @PathVariable Long userId) {
-
+    public List<Problem> getSolvedProblemsByUserId(@PathVariable Long userId) {
         return userProblemService.getSolvedProblemsByUserId(userId);
     }
 
     @GetMapping("/users/{userId}/streak")
-    public Map<String, Long> getStreak(
-            @PathVariable Long userId) {
-
+    public Map<String, Long> getStreak(@PathVariable Long userId) {
         return userProblemService.getStreak(userId);
     }
 }

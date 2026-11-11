@@ -1,13 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Settings - DSA Progress Analyzer</title>
 
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/settings.css">
 </head>
-<body>
+
+<body class="settings-page">
 
 <div class="app">
 
@@ -25,38 +30,27 @@
         <nav class="sidebar-nav">
 
             <a href="/dashboard" class="nav-item">
-                <span>▣</span>
-                <span>Dashboard</span>
+                <span>▣</span><span>Dashboard</span>
             </a>
 
             <a href="#" class="nav-item">
-                <span>✦</span>
-                <span>AI Coach</span>
+                <span>✦</span><span>AI Coach</span>
             </a>
 
             <a href="/problems-page" class="nav-item">
-                <span>☷</span>
-                <span>Problems</span>
+                <span>☷</span><span>Problems</span>
             </a>
 
             <a href="/analytics" class="nav-item">
-                <span>▥</span>
-                <span>Analytics</span>
+                <span>▥</span><span>Analytics</span>
             </a>
 
             <a href="/progress" class="nav-item">
-                <span>↗</span>
-                <span>Progress</span>
+                <span>↗</span><span>Progress</span>
             </a>
 
-            <!--            <a href="/github" class="nav-item">-->
-            <!--                <span>◈</span>-->
-            <!--                <span>GitHub</span>-->
-            <!--            </a>-->
-
             <a href="/settings" class="nav-item active">
-                <span>⚙</span>
-                <span>Settings</span>
+                <span>⚙</span><span>Settings</span>
             </a>
 
         </nav>
@@ -70,6 +64,7 @@
         </div>
 
     </aside>
+
 
     <!-- Main -->
     <main class="main">
@@ -90,41 +85,72 @@
                 </div>
 
                 <strong>Vinayaka</strong>
-
                 <div class="avatar small">V</div>
 
             </div>
 
         </header>
 
-        <!-- Settings Content -->
-        <section class="dashboard">
 
-            <div class="page-heading">
+        <!-- Settings content -->
+        <section class="dashboard settings-dashboard">
+
+            <!-- Heading -->
+            <div class="settings-heading">
+
                 <div>
+                    <span class="section-eyebrow">PERSONALIZE YOUR EXPERIENCE</span>
+
                     <h1>Settings</h1>
-                    <p>Manage your profile, GitHub connection, and DSA goals.</p>
+
+                    <p>
+                        Manage your profile, GitHub integration and learning goals.
+                    </p>
                 </div>
+
+                <div class="settings-heading-decoration">
+                    <span>⚙</span>
+                    <div>
+                        <strong>Your workspace</strong>
+                        <small>Make it work your way.</small>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- Profile -->
 
-            <div class="panel">
-                <div class="panel-header">
-                    <h2>User Profile</h2>
+            <!-- Profile -->
+            <section class="settings-card profile-panel">
+
+                <div class="settings-card-heading">
+
+                    <div class="settings-heading-icon profile-heading-icon">
+                        ◉
+                    </div>
+
+                    <div>
+                        <h2>Personal Profile</h2>
+                        <p>Manage your personal information and profile picture.</p>
+                    </div>
+
                 </div>
+
 
                 <div class="profile-layout">
 
-                    <!-- Profile picture -->
-
+                    <!-- Profile photo -->
                     <div class="profile-photo-section">
-                        <img
-                                id="profilePhoto"
-                                class="profile-photo"
-                                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130' viewBox='0 0 130 130'%3E%3Crect width='130' height='130' rx='65' fill='%23f4f0ff'/%3E%3Ccircle cx='65' cy='46' r='23' fill='%23c7b8ff'/%3E%3Cpath d='M20 125c0-26 19-43 45-43s45 17 45 43' fill='%23c7b8ff'/%3E%3C/svg%3E"
-                                alt="Default profile picture"
-                        >
+
+                        <div class="profile-photo-frame">
+
+                            <img
+                                    id="profilePhoto"
+                                    class="profile-photo"
+                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130' viewBox='0 0 130 130'%3E%3Crect width='130' height='130' rx='65' fill='%23f4f0ff'/%3E%3Ccircle cx='65' cy='46' r='23' fill='%23c7b8ff'/%3E%3Cpath d='M20 125c0-26 19-43 45-43s45 17 45 43' fill='%23c7b8ff'/%3E%3C/svg%3E"
+                                    alt="Profile picture"
+                            >
+
+                        </div>
 
                         <input
                                 type="file"
@@ -138,7 +164,9 @@
                         </label>
 
                         <small>PNG, JPG or WebP</small>
+
                     </div>
+
 
                     <!-- User details -->
                     <div class="form-grid profile-fields">
@@ -150,26 +178,27 @@
                                     id="userName"
                                     placeholder="Enter your username"
                                     maxlength="50"
-                            />
+                            >
                         </div>
 
                         <div class="form-group">
-                            <label for="userEmail">Email</label>
+                            <label for="userEmail">Email Address</label>
                             <input
                                     type="email"
                                     id="userEmail"
                                     readonly
-                            />
+                            >
                             <small>Email cannot be changed here.</small>
                         </div>
 
                         <div class="form-group">
                             <label for="userLinkedIn">LinkedIn Profile</label>
+
                             <input
                                     type="url"
                                     id="userLinkedIn"
                                     placeholder="https://www.linkedin.com/in/your-profile/"
-                            />
+                            >
 
                             <a
                                     id="linkedinProfileLink"
@@ -178,8 +207,8 @@
                                     rel="noopener noreferrer"
                                     hidden
                             >Open LinkedIn Profile ↗</a>
-                        </div>
 
+                        </div>
 
                         <div class="form-group">
                             <label for="userPhone">Phone Number</label>
@@ -188,10 +217,11 @@
                                     id="userPhone"
                                     placeholder="Enter your phone number"
                                     maxlength="20"
-                            />
+                            >
                         </div>
 
                         <div class="profile-actions">
+
                             <button type="button" id="saveProfileBtn">
                                 Save Changes
                             </button>
@@ -199,34 +229,46 @@
                             <button type="button" id="cancelProfileBtn">
                                 Cancel
                             </button>
+
                         </div>
 
                         <p id="profileMessage" role="status" aria-live="polite"></p>
 
                     </div>
+
                 </div>
-            </div>
+
+            </section>
 
 
-            <!-- GitHub -->
             <!-- GitHub Integration -->
-            <div class="panel github-panel">
+            <section class="settings-card github-panel">
 
-                <div class="panel-header github-header">
-                    <div>
+                <div class="settings-card-heading github-card-heading">
+
+                    <div class="settings-heading-icon github-heading-icon">
+                        ◈
+                    </div>
+
+                    <div class="github-title-content">
                         <h2>GitHub Integration</h2>
-                        <p class="github-subtitle">
-                            Connect your GitHub repository to track your DSA progress automatically.
+                        <p>
+                            Connect your GitHub repository to automatically track
+                            your DSA solutions.
                         </p>
                     </div>
 
-                    <span id="githubStatusBadge" class="github-status-badge checking">
-            Checking...
-        </span>
+                    <span
+                            id="githubStatusBadge"
+                            class="github-status-badge checking"
+                    >
+                        Checking...
+                    </span>
+
                 </div>
 
 
-                <!-- GitHub Account -->
+                <!-- GitHub account -->
                 <div class="github-account-row">
 
                     <div class="github-account-icon">
@@ -235,9 +277,7 @@
 
                     <div class="github-account-info">
 
-            <span class="github-label">
-                GitHub Account
-            </span>
+                        <span class="github-label">CONNECTED ACCOUNT</span>
 
                         <strong id="githubUsername">
                             Loading...
@@ -248,35 +288,37 @@
                     <button
                             type="button"
                             id="viewGithubBtn"
-                            class="github-outline-btn">
+                            class="github-outline-btn"
+                    >
                         View Profile ↗
                     </button>
 
                 </div>
 
 
-
                 <!-- Repository -->
                 <div class="form-group github-repository-group">
-                    <label for="repositoryName">Repository</label>
 
-                    <select id="repositoryName" class="github-repository-display">
+                    <label for="repositoryName">Selected Repository</label>
+
+                    <select
+                            id="repositoryName"
+                            class="github-repository-display"
+                    >
                         <option value="">Loading repositories...</option>
                     </select>
 
                     <small class="field-hint">
                         Select your connected LeetCode solutions repository.
                     </small>
+
                 </div>
 
 
-
-                <!-- Connection information -->
+                <!-- Connection status -->
                 <div class="github-connection-info">
 
-                    <div class="connection-icon">
-                        ✓
-                    </div>
+                    <div class="connection-icon">✓</div>
 
                     <div>
                         <strong id="githubConnectionTitle">
@@ -291,44 +333,41 @@
                 </div>
 
 
-                <!-- Actions -->
+                <!-- GitHub actions -->
                 <div class="github-actions">
-
 
                     <button
                             type="button"
                             id="connectGithubBtn"
                             class="github-primary-btn"
-                            hidden>
+                            hidden
+                    >
                         ◈ Connect GitHub
                     </button>
-
 
                     <button
                             type="button"
                             id="testGithubBtn"
-                            class="github-secondary-btn">
-
+                            class="github-secondary-btn"
+                    >
                         ✓ Test Connection
-
                     </button>
 
                     <button
                             type="button"
                             id="syncGithubBtn"
-                            class="github-primary-btn">
-
+                            class="github-primary-btn"
+                    >
                         ⟳ Sync GitHub Now
-
                     </button>
 
                 </div>
 
 
-                <!-- Last Sync -->
+                <!-- Last sync -->
                 <div class="github-last-sync">
 
-                    <span>Last Sync</span>
+                    <span>Last Successful Sync</span>
 
                     <strong id="lastSyncText">
                         Not synced yet
@@ -337,30 +376,28 @@
                 </div>
 
 
-                <!-- Sync statistics -->
+                <!-- GitHub statistics -->
                 <div class="github-sync-stats">
 
                     <div class="github-stat">
 
-                        <strong id="githubProblemsCount">
-                            —
-                        </strong>
+                        <div class="github-stat-icon">✓</div>
 
-                        <span>
-                Problems Synced
-            </span>
+                        <div>
+                            <strong id="githubProblemsCount">—</strong>
+                            <span>Problems Synced</span>
+                        </div>
 
                     </div>
 
                     <div class="github-stat">
 
-                        <strong id="githubRepositoryCount">
-                            —
-                        </strong>
+                        <div class="github-stat-icon">▣</div>
 
-                        <span>
-                Repositories
-            </span>
+                        <div>
+                            <strong id="githubRepositoryCount">—</strong>
+                            <span>Repositories</span>
+                        </div>
 
                     </div>
 
@@ -371,82 +408,119 @@
                 <div class="github-danger-zone">
 
                     <div>
-
-                        <strong>
-                            Disconnect GitHub
-                        </strong>
+                        <strong>Disconnect GitHub</strong>
 
                         <p>
                             Remove the GitHub connection from your account.
                             Your existing DSA progress will not be deleted.
                         </p>
-
                     </div>
 
                     <button
                             type="button"
                             id="disconnectGithubBtn"
-                            class="github-danger-btn">
-
+                            class="github-danger-btn"
+                    >
                         Disconnect
-
                     </button>
 
                 </div>
 
 
-                <!-- GitHub message -->
                 <div
                         id="githubMessage"
-                        class="github-message">
-                </div>
+                        class="github-message"
+                        role="status"
+                        aria-live="polite"
+                ></div>
 
-            </div>
+            </section>
 
-            <!-- Goals -->
-            <div class="panel">
 
-                <div class="panel-header">
-                    <h2>Goal Settings</h2>
-                </div>
+            <!-- Goal Settings -->
+            <section class="settings-card goals-panel">
 
-                <div class="form-grid">
+                <div class="settings-card-heading">
 
-                    <div class="form-group">
-                        <label>Weekly Goal</label>
-                        <input type="number" id="weeklyGoal" min="1">
+                    <div class="settings-heading-icon goals-heading-icon">
+                        🎯
                     </div>
 
-                    <div class="form-group">
-                        <label>Monthly Goal</label>
-                        <input type="number" id="monthlyGoal" min="1">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Target Goal</label>
-                        <input type="number" id="targetGoal" min="1">
+                    <div>
+                        <h2>Goal Settings</h2>
+                        <p>Set targets that keep your DSA practice consistent.</p>
                     </div>
 
                 </div>
 
-            </div>
 
-            <!-- Save -->
-            <div class="panel">
+                <div class="form-grid goals-grid">
 
-                <button id="saveSettingsBtn" class="export-btn">
-                    Save Settings
-                </button>
+                    <div class="form-group goal-input-card">
+                        <label for="weeklyGoal">Weekly Goal</label>
+                        <input
+                                type="number"
+                                id="weeklyGoal"
+                                min="1"
+                                placeholder="e.g. 7"
+                        >
+                        <small>Problems to solve each week</small>
+                    </div>
 
-                <span id="saveMessage"></span>
+                    <div class="form-group goal-input-card">
+                        <label for="monthlyGoal">30-Day Goal</label>
+                        <input
+                                type="number"
+                                id="monthlyGoal"
+                                min="1"
+                                placeholder="e.g. 40"
+                        >
+                        <small>Problems to solve in 30 days</small>
+                    </div>
 
-            </div>
+                    <div class="form-group goal-input-card">
+                        <label for="targetGoal">Overall Target</label>
+                        <input
+                                type="number"
+                                id="targetGoal"
+                                min="1"
+                                placeholder="e.g. 200"
+                        >
+                        <small>Your long-term problem target</small>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Save settings -->
+            <section class="settings-save-card">
+
+                <div>
+                    <strong>Ready to save your preferences?</strong>
+                    <p>Your goal settings will be used to update your progress dashboard.</p>
+                </div>
+
+                <div class="settings-save-actions">
+
+                    <span id="saveMessage" role="status" aria-live="polite"></span>
+
+                    <button id="saveSettingsBtn" class="export-btn">
+                        Save Settings →
+                    </button>
+
+                </div>
+
+            </section>
+
 
         </section>
 
     </main>
 
 </div>
+
 
 <script src="/js/config.js"></script>
 <script src="/js/settings.js"></script>

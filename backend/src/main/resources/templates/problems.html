@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,9 +9,10 @@
     <title>Problems - DSA Progress Analyzer</title>
 
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/problems.css">
 </head>
 
-<body>
+<body class="problems-page">
 
 <div class="app">
 
@@ -38,7 +40,7 @@
                 <span>AI Coach</span>
             </a>
 
-            <a href="/problems-page" class="nav-item">
+            <a href="/problems-page" class="nav-item active">
                 <span>☷</span>
                 <span>Problems</span>
             </a>
@@ -52,11 +54,6 @@
                 <span>↗</span>
                 <span>Progress</span>
             </a>
-
-<!--            <a href="/github" class="nav-item">-->
-<!--                <span>◈</span>-->
-<!--                <span>GitHub</span>-->
-<!--            </a>-->
 
             <a href="/settings" class="nav-item">
                 <span>⚙</span>
@@ -86,13 +83,16 @@
         <header class="topbar">
 
             <div class="search-box">
+
                 <span>⌕</span>
 
                 <input
-                        type="text"
+                        type="search"
                         id="problemSearch"
-                        placeholder="Search problems, topics..."
+                        placeholder="Search problems, topics, number..."
+                        aria-label="Search solved problems"
                 >
+
             </div>
 
             <div class="top-user">
@@ -114,33 +114,47 @@
 
 
         <!-- Problems content -->
-        <section class="dashboard">
+        <section class="dashboard problems-dashboard">
 
-            <div class="page-heading">
+            <!-- Page heading -->
+            <div class="page-heading problems-heading">
 
                 <div>
+
+                    <span class="problems-eyebrow">
+                        YOUR DSA JOURNEY
+                    </span>
 
                     <h1>Solved Problems</h1>
 
                     <p>
-                        Explore and analyze your solved DSA problems.
+                        Explore, filter and review the problems you've completed.
                     </p>
+
+                </div>
+
+                <div class="problems-heading-note">
+
+                    <span class="heading-note-icon">✦</span>
+
+                    <div>
+                        <strong>Keep building consistency</strong>
+                        <small>Every solved problem counts.</small>
+                    </div>
 
                 </div>
 
             </div>
 
 
-            <!-- Summary -->
-            <div class="stats-grid">
+            <!-- Summary cards -->
+            <div class="stats-grid problems-stats">
 
                 <div class="stat-card solved">
 
                     <div class="stat-icon">ⓘ</div>
 
-                    <div
-                            class="stat-number"
-                            id="problemTotal">
+                    <div class="stat-number" id="problemTotal">
                         0
                     </div>
 
@@ -153,11 +167,9 @@
 
                 <div class="stat-card easy">
 
-                    <div class="stat-icon">▥</div>
+                    <div class="stat-icon">✓</div>
 
-                    <div
-                            class="stat-number"
-                            id="problemEasy">
+                    <div class="stat-number" id="problemEasy">
                         0
                     </div>
 
@@ -172,9 +184,7 @@
 
                     <div class="stat-icon">🔥</div>
 
-                    <div
-                            class="stat-number"
-                            id="problemMedium">
+                    <div class="stat-number" id="problemMedium">
                         0
                     </div>
 
@@ -189,9 +199,7 @@
 
                     <div class="stat-icon">★</div>
 
-                    <div
-                            class="stat-number"
-                            id="problemHard">
+                    <div class="stat-number" id="problemHard">
                         0
                     </div>
 
@@ -204,79 +212,148 @@
             </div>
 
 
-            <!-- Filters -->
-            <div class="panel">
+            <!-- Search and filters -->
+            <section class="panel problems-filter-panel">
 
-                <div class="panel-header">
+                <div class="filter-heading">
 
-                    <h2>Filters</h2>
+                    <div>
+                        <h2>Find a Problem</h2>
 
-                </div>
-
-                <div class="problem-filters">
-
-                    <select id="difficultyFilter">
-
-                        <option value="all">
-                            All Difficulties
-                        </option>
-
-                        <option value="Easy">
-                            Easy
-                        </option>
-
-                        <option value="Medium">
-                            Medium
-                        </option>
-
-                        <option value="Hard">
-                            Hard
-                        </option>
-
-                    </select>
-
-
-                    <select id="topicFilter">
-
-                        <option value="all">
-                            All Topics
-                        </option>
-
-                    </select>
-
+                        <p>
+                            Narrow your list by difficulty, topic or platform.
+                        </p>
+                    </div>
 
                     <button
+                            type="button"
                             id="clearFilters"
-                            class="export-btn">
-
-                        Clear Filters
-
+                            class="clear-filter-btn"
+                    >
+                        Reset Filters
                     </button>
 
                 </div>
 
-            </div>
+
+                <div class="problem-filters">
+
+                    <label class="filter-control">
+
+                        <span>Difficulty</span>
+
+                        <select id="difficultyFilter">
+
+                            <option value="all">
+                                All Difficulties
+                            </option>
+
+                            <option value="Easy">
+                                Easy
+                            </option>
+
+                            <option value="Medium">
+                                Medium
+                            </option>
+
+                            <option value="Hard">
+                                Hard
+                            </option>
+
+                        </select>
+
+                    </label>
+
+
+                    <label class="filter-control">
+
+                        <span>Topic</span>
+
+                        <select id="topicFilter">
+
+                            <option value="all">
+                                All Topics
+                            </option>
+
+                        </select>
+
+                    </label>
+
+
+                    <label class="filter-control">
+
+                        <span>Platform</span>
+
+                        <select id="platformFilter">
+
+                            <option value="all">
+                                All Platforms
+                            </option>
+
+                        </select>
+
+                    </label>
+
+
+                    <label class="filter-control">
+
+                        <span>Sort By</span>
+
+                        <select id="sortFilter">
+
+                            <option value="default">
+                                Default Order
+                            </option>
+
+                            <option value="name-asc">
+                                Problem Name (A-Z)
+                            </option>
+
+                            <option value="name-desc">
+                                Problem Name (Z-A)
+                            </option>
+
+                            <option value="difficulty">
+                                Difficulty
+                            </option>
+
+                            <option value="number">
+                                Problem Number
+                            </option>
+
+                        </select>
+
+                    </label>
+
+                </div>
+
+            </section>
 
 
             <!-- Problems table -->
-            <div class="panel">
+            <section class="panel problems-table-panel">
 
-                <div class="panel-header">
+                <div class="problems-table-heading">
 
                     <div>
 
-                        <h2>Problems</h2>
+                        <h2>Your Solved Problems</h2>
 
-                        <span id="problemCount">
-                            Loading...
-                        </span>
+                        <p id="problemCount" aria-live="polite">
+                            Loading problems...
+                        </p>
 
                     </div>
+
+                    <span class="table-live-indicator">
+                        <i></i>
+                        Synced List
+                    </span>
 
                 </div>
 
 
-                <div class="table-container">
+                <div class="table-container problems-table-wrap">
 
                     <table class="problems-table">
 
@@ -284,7 +361,7 @@
 
                         <tr>
 
-                            <th>#</th>
+                            <th class="number-column">#</th>
 
                             <th>Problem</th>
 
@@ -294,18 +371,19 @@
 
                             <th>Platform</th>
 
-                            <th>Link</th>
+                            <th>Solution</th>
 
                         </tr>
 
                         </thead>
 
+
                         <tbody id="problemsTableBody">
 
                         <tr>
 
-                            <td colspan="6">
-                                Loading problems...
+                            <td colspan="6" class="table-state">
+                                Loading your solved problems...
                             </td>
 
                         </tr>
@@ -316,7 +394,62 @@
 
                 </div>
 
-            </div>
+
+                <!-- Pagination -->
+                <div class="problems-pagination">
+
+                    <span id="paginationInfo">
+                        Loading...
+                    </span>
+
+                    <div class="pagination-controls">
+
+                        <label class="page-size-control" for="pageSize">
+
+                            Rows
+
+                            <select id="pageSize">
+
+                                <option value="10">10</option>
+
+                                <option value="25" selected>25</option>
+
+                                <option value="50">50</option>
+
+                                <option value="100">100</option>
+
+                            </select>
+
+                        </label>
+
+
+                        <button
+                                type="button"
+                                id="prevPage"
+                                class="page-btn"
+                                disabled
+                        >
+                            ← Previous
+                        </button>
+
+
+                        <span id="pageNumbers" class="page-numbers"></span>
+
+
+                        <button
+                                type="button"
+                                id="nextPage"
+                                class="page-btn"
+                                disabled
+                        >
+                            Next →
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
 
         </section>
 
@@ -325,8 +458,7 @@
 </div>
 
 
-<script src="/js/problems.js"></script>
+<script src="/js/problems.js?v=3"></script>
 
 </body>
-
 </html>

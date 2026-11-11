@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,9 +9,10 @@
     <title>Analytics - DSA Progress Analyzer</title>
 
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/analytics.css?v=8">
 </head>
 
-<body>
+<body class="analytics-page">
 
 <div class="app">
 
@@ -19,7 +21,6 @@
 
         <div class="brand">
             <div class="brand-icon">◆</div>
-
             <div>
                 <h2>DSA Progress</h2>
                 <span>Analyzer</span>
@@ -53,11 +54,6 @@
                 <span>Progress</span>
             </a>
 
-<!--            <a href="/github" class="nav-item">-->
-<!--                <span>◈</span>-->
-<!--                <span>GitHub</span>-->
-<!--            </a>-->
-
             <a href="/settings" class="nav-item">
                 <span>⚙</span>
                 <span>Settings</span>
@@ -66,14 +62,12 @@
         </nav>
 
         <div class="sidebar-user">
-
             <div class="avatar">V</div>
 
             <div>
                 <strong>Vinayaka</strong>
                 <small>DSA Student</small>
             </div>
-
         </div>
 
     </aside>
@@ -82,17 +76,17 @@
     <!-- Main -->
     <main class="main">
 
+        <!-- Topbar -->
         <header class="topbar">
 
             <div class="search-box">
-
                 <span>⌕</span>
 
                 <input
                         type="text"
                         placeholder="Search problems, topics..."
+                        aria-label="Search problems and topics"
                 >
-
             </div>
 
             <div class="top-user">
@@ -116,22 +110,21 @@
         <!-- Analytics -->
         <section class="dashboard">
 
+            <!-- Page heading -->
             <div class="page-heading">
 
                 <div>
-
                     <h1>Analytics</h1>
 
                     <p>
                         Analyze your DSA solving performance and progress.
                     </p>
-
                 </div>
 
             </div>
 
 
-            <!-- Summary -->
+            <!-- Summary Cards -->
             <div class="stats-grid">
 
                 <div class="stat-card solved">
@@ -204,13 +197,11 @@
             </div>
 
 
-            <!-- Difficulty -->
-            <div class="panel">
+            <!-- Difficulty Breakdown -->
+            <div class="panel analytics-panel">
 
                 <div class="panel-header">
-
                     <h2>Difficulty Breakdown</h2>
-
                 </div>
 
                 <div class="difficulty-breakdown">
@@ -224,8 +215,8 @@
                         </strong>
 
                         <span id="breakdownEasyPercent">
-                0%
-            </span>
+                            0%
+                        </span>
 
                     </div>
 
@@ -239,8 +230,8 @@
                         </strong>
 
                         <span id="breakdownMediumPercent">
-                0%
-            </span>
+                            0%
+                        </span>
 
                     </div>
 
@@ -254,8 +245,8 @@
                         </strong>
 
                         <span id="breakdownHardPercent">
-                0%
-            </span>
+                            0%
+                        </span>
 
                     </div>
 
@@ -264,36 +255,63 @@
             </div>
 
 
-            <!-- Topics -->
-            <div class="panel">
+            <!-- Topic-wise Practice Histogram -->
+            <div class="panel analytics-panel">
 
                 <div class="panel-header">
 
-                    <h2>Topic Analysis</h2>
+                    <div>
+                        <h2>Topic-wise Practice Analysis</h2>
+
+                        <p class="panel-description">
+                            Topics with fewer solved problems need more practice.
+                        </p>
+                    </div>
 
                 </div>
 
-                <div class="topic-chart-container">
-                    <canvas id="analyticsTopicChart"></canvas>
+                <div
+                        id="analyticsTopicChart"
+                        class="topic-chart-container"
+                        aria-live="polite">
+
+                    <p class="analytics-empty">
+                        Loading topic analysis...
+                    </p>
+
                 </div>
 
             </div>
 
 
-            <!-- Progress History -->
-            <div class="panel">
+            <!-- Date-wise Progress History -->
+            <div class="panel analytics-panel">
 
                 <div class="panel-header">
 
-                    <h2>Progress History</h2>
+                    <div>
+                        <h2>Your Progress History</h2>
+
+                        <p class="panel-description">
+                            View your recorded problem-solving progress over time.
+                        </p>
+                    </div>
 
                 </div>
 
-                <div class="analytics-chart-container">
-                    <canvas id="analyticsProgressChart"></canvas>
+                <div
+                        id="analyticsProgressChart"
+                        class="analytics-chart-container"
+                        aria-live="polite">
+
+                    <p class="analytics-empty">
+                        Loading progress history...
+                    </p>
+
                 </div>
 
             </div>
+
 
         </section>
 
@@ -302,10 +320,8 @@
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script src="/js/analytics.js"></script>
+<!-- Analytics JavaScript -->
+<script src="/js/analytics.js?v=5"></script>
 
 </body>
-
 </html>
