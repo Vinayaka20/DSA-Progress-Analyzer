@@ -3,6 +3,8 @@
    DSA PROGRESS ANALYZER
    PROBLEMS PAGE STYLING
 ========================================== */
+/* Hide notification icon only on Problems page */
+
 
 body.problems-page {
     background: #f7f6fb;
