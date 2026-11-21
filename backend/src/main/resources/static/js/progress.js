@@ -539,3 +539,11 @@ function updateTargetProgress() {
             0
         )}`;
 }
+
+const editGoalsBtn = document.getElementById("editGoalsBtn");
+
+if (editGoalsBtn) {
+    editGoalsBtn.addEventListener("click", () => {
+        window.location.href = "/settings#learning-goals";
+    });
+}
